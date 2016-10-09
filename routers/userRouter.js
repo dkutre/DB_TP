@@ -1,43 +1,46 @@
 var express = require('express');
 var userRouter = express.Router();
-
-
+var functions = require('../functions/functions');
+var callback = require('../response');
+/*
 userRouter.use(function (req, res, next) {
   console.log("/user");
-  res.send('kek');
+  next();
+});*/
+
+userRouter.post('/create', function (req, res) {
+  console.log('create');
+  functions.userCreate(req.body, callback(res));
 });
 
-forumRouter.post('/create', function (req, res) {
-  functions.userCreate(callback(res));
+userRouter.get('/details', function (req, res) {
+  console.log('details');
+  functions.userDetails(req, callback(res));
 });
 
-forumRouter.get('/details', function (req, res) {
-  functions.userDetails(callback(res));
-});
-
-forumRouter.post('/follow', function (req, res) {
+userRouter.post('/follow', function (req, res) {
   functions.userFollow(callback(res));
 });
 
-forumRouter.get('/listFollowers', function (req, res) {
+userRouter.get('/listFollowers', function (req, res) {
   functions.userListFollowers(callback(res));
 });
 
-forumRouter.get('/listFollowing', function (req, res) {
+userRouter.get('/listFollowing', function (req, res) {
   functions.userListFollowing(callback(res));
 });
 
-forumRouter.post('/updateProfile', function (req, res) {
+userRouter.post('/updateProfile', function (req, res) {
   functions.userupdateProf(callback(res));
 });
 
 
-forumRouter.post('/listPosts', function (req, res) {
+userRouter.post('/listPosts', function (req, res) {
   functions.userListPosts(callback(res));
 });
 
 
-forumRouter.post('/unfollow', function (req, res) {
+userRouter.post('/unfollow', function (req, res) {
   functions.userUnfollow(callback(res));
 });
 

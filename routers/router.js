@@ -5,7 +5,7 @@ var functions = require('../functions/functions');
 
 
 router.use(function (req, res, next) {
-  console.log("/");
+  console.log("/general");
 });
 
 router.post('/clear', function (req, res) {

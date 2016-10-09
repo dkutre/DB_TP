@@ -12,12 +12,11 @@ var router       = require('./routers/router');
 
 API_URL = '/db/api/';
 
-app.use(API_URL, router);
 app.use(API_URL + 'user',   userRouter);
 app.use(API_URL + 'thread', threadRouter);
 app.use(API_URL + 'forum',  forumRouter);
 app.use(API_URL + 'post',   postRouter);
-
+app.use(API_URL, router);
 
 
 app.listen(3000, function () {
