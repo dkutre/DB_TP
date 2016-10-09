@@ -1,18 +1,23 @@
 var express = require('express');
 var app = express();
 
+//var mysql = require('mysql');
+
+
 var userRouter   = require('./routers/userRouter');
 var threadRouter = require('./routers/threadRouter');
 var forumRouter  = require('./routers/forumRouter');
 var postRouter   = require('./routers/postRouter');
+var router       = require('./routers/router');
 
-DATA_BASE_URL = '/db/api/';
+API_URL = '/db/api/';
 
+app.use(API_URL, router);
+app.use(API_URL + 'user',   userRouter);
+app.use(API_URL + 'thread', threadRouter);
+app.use(API_URL + 'forum',  forumRouter);
+app.use(API_URL + 'post',   postRouter);
 
-app.use('/user'   + DATA_BASE_URL, userRouter);
-app.use('/thread' + DATA_BASE_URL, threadRouter);
-app.use('/forum'  + DATA_BASE_URL, forumRouter);
-app.use('/post'   + DATA_BASE_URL, postRouter);
 
 
 app.listen(3000, function () {
