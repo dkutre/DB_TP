@@ -1,7 +1,6 @@
 var express = require('express');
 var app = express();
-
-//var mysql = require('mysql');
+var bodyParser = require('body-parser');
 
 
 var userRouter   = require('./routers/userRouter');
@@ -11,6 +10,11 @@ var postRouter   = require('./routers/postRouter');
 var router       = require('./routers/router');
 
 API_URL = '/db/api/';
+
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
 
 app.use(API_URL + 'user',   userRouter);
 app.use(API_URL + 'thread', threadRouter);

@@ -4,18 +4,35 @@ function create(data, callback) {
   /*
   создание юзера
    */
-  var res = {
-    code: 0,
-    response: {
-      about: data.about,
-      email: data.email,
-      id: 0,
-      isAnonymous: false,
-      name: data.name,
-      username: data.username
-    }
-  };
-  callback(0, res);
+  console.log(data);
+  if (data.isAnonymous === undefined) {
+    data.isAnonymous = false;
+  }
+  if (data.email === undefined) {
+    //error;
+  }
+  if (!data.name) {
+    data.name = '';
+  }
+  if (!data.username) {
+    data.username = '';
+  }
+  if (!data.about) {
+    data.about = '';
+  }
+
+  db.query("INSERT INTO users (username, about, name, email, isAnonymous) VALUES (?, ?, ?, ?, ?);",
+    [data.username, data.about, data.name, data.email, data.isAnonymous],
+    function (err, rows) {
+      if (err) {
+        console.log(err);
+        callback(err);
+      } else {
+        data.id = rows.insertId;
+        callback(0, data);
+        console.log(data);
+      }
+    });
 }
 
 module.exports = create;

@@ -9,17 +9,19 @@ userRouter.use(function (req, res, next) {
 });*/
 
 userRouter.post('/create', function (req, res) {
-  console.log('create');
+  console.log(req);
   functions.userCreate(req.body, callback(res));
 });
 
-userRouter.get('/details', function (req, res) {
-  console.log('details');
-  functions.userDetails(req, callback(res));
+
+userRouter.get('/details/', function (req, res) {
+  console.log('details ' + req.query.user);
+  functions.userDetails(req.query, callback(res));
 });
 
 userRouter.post('/follow', function (req, res) {
-  functions.userFollow(callback(res));
+  console.log('follow\n' + req.body);
+  functions.userFollow(req.body, callback(res));
 });
 
 userRouter.get('/listFollowers', function (req, res) {
@@ -41,7 +43,8 @@ userRouter.post('/listPosts', function (req, res) {
 
 
 userRouter.post('/unfollow', function (req, res) {
-  functions.userUnfollow(callback(res));
+  console.log('unfollow\n' + req.body);
+  functions.userUnfollow(req.body, callback(res));
 });
 
 module.exports = userRouter;
