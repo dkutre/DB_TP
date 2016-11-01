@@ -33,7 +33,8 @@ userRouter.get('/listFollowing', function (req, res) {
 });
 
 userRouter.post('/updateProfile', function (req, res) {
-  functions.userupdateProf(callback(res));
+  console.log('updateProfile');
+  functions.userupdateProf(req.body, callback(res));
 });
 
 

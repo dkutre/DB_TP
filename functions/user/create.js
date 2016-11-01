@@ -1,15 +1,20 @@
 var db = require('../connection');
+var errors = require('../errors');
+
+
 
 function create(data, callback) {
   /*
-  создание юзера
+   создание юзера
    */
   console.log(data);
   if (data.isAnonymous === undefined) {
     data.isAnonymous = false;
   }
-  if (data.email === undefined) {
-    //error;
+
+  if (!data.user) {
+    console.log('email_undefined');
+    errors.sendError(3, callback); // некорректный сапрос
   }
   if (!data.name) {
     data.name = '';
@@ -26,7 +31,7 @@ function create(data, callback) {
     function (err, rows) {
       if (err) {
         console.log(err);
-        callback(err);
+        errors.sendSqlError(err, callback);
       } else {
         data.id = rows.insertId;
         callback(0, data);

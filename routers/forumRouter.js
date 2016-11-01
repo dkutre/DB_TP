@@ -5,10 +5,12 @@ var callback = require('../response');
 
 forumRouter.use(function (req, res, next) {
   console.log("/forum");
+  next();
 });
 
 forumRouter.post('/create', function (req, res) {
-  functions.forumCreate(callback(res));
+  console.log("/forum");
+  functions.forumCreate(req.body, callback(res));
 });
 
 forumRouter.get('/details', function (req, res) {
