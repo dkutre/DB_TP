@@ -28,12 +28,12 @@ function create(data, callback) {
 
   db.query("INSERT INTO users (username, about, name, email, isAnonymous) VALUES (?, ?, ?, ?, ?);",
     [data.username, data.about, data.name, data.email, data.isAnonymous],
-    function (err, rows) {
+    function (err, res) {
       if (err) {
         console.log(err);
         errors.sendSqlError(err, callback);
       } else {
-        data.id = rows.insertId;
+        data.id = res.insertId;
         callback(0, data);
         console.log(data);
       }

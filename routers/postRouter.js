@@ -9,7 +9,7 @@ postRouter.use(function (req, res, next) {
 });
 
 postRouter.post('/create', function (req, res) {
-  functions.postCreate(callback(res));
+  functions.postCreate(req.body, callback(res));
 });
 
 

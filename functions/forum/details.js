@@ -1,30 +1,29 @@
-errors = require('../errors');
+var errors = require('../errors');
 var db = require('../connection');
 var functions = require('../system_fucntions');
 
-function callback(json, responseCallBack) {
-
-}
 
 function details(data, callback) {
   if (!data.forum) {
-    errors.getError(3, callback);
+    errors.sendError(3, callback);
   } else {
     var result = {};
     db.query("SELECT * FROM forums WHERE short_name = ?;",
       [data.forum],
       function (err, res) {
         if (err) {
-          errors.sqlErrors(err, callback);
+          errors.sendSqlError(err, callback);
         } else {
+          console.log(res);
+          result = res[0];
+         // result.id = res.insertId;
           if (data.related === 'user') {
-            result = res;
-            functions.getFullUser(res.user, function (code, response) {
+            functions.getFullUser(res[0].user, function (code, res) {
+              result.user = res[0];
+              console.log(result);
               callback(0, result);
-              //todo
-            })
+            });
           } else {
-            data.id = res.insertId;
             callback(0, data);
           }
         }

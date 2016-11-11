@@ -1,22 +1,21 @@
-errors = require('../errors');
+var errors = require('../errors');
 var db = require('../connection');
 var functions = require('../system_fucntions');
 
 
 
-function create(data, responseCallback) {
+function create(data, callback) {
   if (!data.name || !data.short_name || !data.user) {
-    //error
-    errors.getError(3, responseCallback);
+    errors.sendError(3, callback);
   } else {
     db.query("INSERT INTO forums (name, short_name, user) VALUES (?, ?, ?);",
       [data.name, data.short_name, data.user],
       function (err, res) {
         if (err) {
-          errors.sqlErrors(err, responseCallback);
+          errors.sendSqlError(err, callback);
         } else {
           data.id = res.insertId;
-          responseCallback(0, data);
+          callback(0, data);
         }
       }
     )

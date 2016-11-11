@@ -6,18 +6,20 @@ var callback = require('../response');
 
 threadRouter.use(function (req, res, next) {
   console.log("/thread");
+  next();
 });
 
 threadRouter.post('/close', function (req, res) {
-  functions.threadClose(callback(res));
+  functions.threadClose(req.body, callback(res));
 });
 
 threadRouter.post('/create', function (req, res) {
-  functions.threadCreate(callback(res));
+  console.log('thread_create');
+  functions.threadCreate(req.body, callback(res));
 });
 
 threadRouter.get('/details', function (req, res) {
-  functions.threadDetails(callback(res));
+  functions.threadDetails(req.query, callback(res));
 });
 
 threadRouter.get('/list', function (req, res) {
@@ -29,7 +31,7 @@ threadRouter.get('/listPosts', function (req, res) {
 });
 
 threadRouter.post('/open', function (req, res) {
-  functions.threadOpen(callback(res));
+  functions.threadOpen(req.body, callback(res));
 });
 
 threadRouter.post('/remove', function (req, res) {

@@ -32,3 +32,16 @@ module.exports.getFullUser = function (email, callback) {
     }
   );
 };
+/*
+module.exports.getForum = function (short_name, callback) {
+  db.query('SELECT * FROM forums WHEREE short_name = ?',
+    [short_name],
+    function (err, res) {
+      if (err) {
+        errors.sendSqlError(err, callback);
+      } else {
+        callback(0, res);
+      }
+  });
+
+};*/
