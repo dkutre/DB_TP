@@ -2,6 +2,7 @@ var express = require('express');
 var userRouter = express.Router();
 var functions = require('../functions/functions');
 var callback = require('../response');
+var logger = require('../functions/logger');
 /*
 userRouter.use(function (req, res, next) {
   console.log("/user");
@@ -9,18 +10,18 @@ userRouter.use(function (req, res, next) {
 });*/
 
 userRouter.post('/create', function (req, res) {
-  console.log(req);
+  //console.log('user_create' + req.body.toString());
   functions.userCreate(req.body, callback(res));
 });
 
 
 userRouter.get('/details/', function (req, res) {
-  console.log('details ' + req.query.user);
+  //console.log('user_details ' + req.query);
   functions.userDetails(req.query, callback(res));
 });
 
 userRouter.post('/follow', function (req, res) {
-  console.log('follow\n' + req.body);
+ // console.log('user_follow\n' + req.body);
   functions.userFollow(req.body, callback(res));
 });
 
@@ -33,7 +34,7 @@ userRouter.get('/listFollowing', function (req, res) {
 });
 
 userRouter.post('/updateProfile', function (req, res) {
-  console.log('updateProfile');
+  console.log('user_updateProfile' + req.body);
   functions.userupdateProf(req.body, callback(res));
 });
 

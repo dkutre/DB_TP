@@ -4,7 +4,7 @@ var functions = require('../system_fucntions');
 
 
 function create(data, callback) {
-  console.log('thread_create');
+  console.log('thread_create', data);
   if (!data.forum || !data.title || !data.isClosed || !data.user || !data.date || !data.message || !data.slug) {
     errors.sendError(3, callback);
   }

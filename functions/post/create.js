@@ -30,7 +30,7 @@ function create(data, callback) {
     errors.sendError(3, callback);
   }
 
-  db.query()
+  callback(0, "OK");
 }
 
 module.exports = create;

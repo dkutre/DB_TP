@@ -7,10 +7,10 @@ DROP TABLE IF EXISTS users;
 
 CREATE TABLE users (
   id       INT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
-  name     VARCHAR(50) NOT NULL  DEFAULT '',
-  username VARCHAR(50) NOT NULL  DEFAULT '',
+  name     VARCHAR(50),
+  username VARCHAR(50),
   email    VARCHAR(50) NOT NULL  DEFAULT '',
-  about    TEXT NOT NULL  DEFAULT '',
+  about    TEXT,
   isAnonymous BOOLEAN NOT NULL DEFAULT 0,
   UNIQUE KEY(email)
 )DEFAULT CHARSET=utf8;
@@ -18,18 +18,18 @@ CREATE TABLE users (
 CREATE TABLE forums (
   id INT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
   name        VARCHAR(50) NOT NULL DEFAULT '' UNIQUE KEY,
-  short_name  VARCHAR(20) NOT NULL DEFAULT '' UNIQUE KEY,
+  short_name  VARCHAR(50) NOT NULL DEFAULT '' UNIQUE KEY,
   user        VARCHAR(50) NOT NULL DEFAULT ''
 )DEFAULT CHARSET=utf8;
 /*=================================================*/
 CREATE TABLE threads (
     id                 INT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
-    forumShortName     VARCHAR(20) UNIQUE KEY,
+    forumShortName     VARCHAR(50) UNIQUE KEY,
     user               VARCHAR(50) NOT NULL DEFAULT '',
     title              VARCHAR(50) NOT NULL DEFAULT '',
     slug               VARCHAR(50) NOT NULL DEFAULT '',
     message            TEXT NOT NULL DEFAULT '',
-    date               TIMESTAMP NOT NULL,
+    date               timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     likes              INT NOT NULL DEFAULT 0,
     dislikes           INT NOT NULL DEFAULT 0,
     isClosed           BOOLEAN NOT NULL DEFAULT 0,

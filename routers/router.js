@@ -6,14 +6,15 @@ var functions = require('../functions/functions');
 
 router.use(function (req, res, next) {
   console.log("/general");
+  next();
 });
 
 router.post('/clear', function (req, res) {
   functions.clear(callback(res));
-})
+});
 
 router.get('/status', function (req, res) {
   functions.status(callback(res));
-})
+});
 
 module.exports = router;

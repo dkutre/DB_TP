@@ -19,6 +19,7 @@ threadRouter.post('/create', function (req, res) {
 });
 
 threadRouter.get('/details', function (req, res) {
+  console.log('thread_details');
   functions.threadDetails(req.query, callback(res));
 });
 

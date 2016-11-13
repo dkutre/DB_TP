@@ -4,6 +4,7 @@ var functions = require('../system_fucntions');
 
 
 function details(data, callback) {
+  console.log(data);
   if (!data.forum) {
     errors.sendError(3, callback);
   } else {
@@ -19,12 +20,12 @@ function details(data, callback) {
          // result.id = res.insertId;
           if (data.related === 'user') {
             functions.getFullUser(res[0].user, function (code, res) {
-              result.user = res[0];
+              result.user = res;
               console.log(result);
               callback(0, result);
             });
           } else {
-            callback(0, data);
+            callback(0, result);
           }
         }
       });

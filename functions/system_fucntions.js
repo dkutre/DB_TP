@@ -23,6 +23,18 @@ module.exports.getFullUser = function (email, callback) {
         errors.sendSqlError(err, callback);
       } else {
         if (res) {
+          res = res[0];
+
+          if (!res.subscriptions) {
+            res.subscriptions = [];
+          }
+          if (!res.followers) {
+            res.followers = [];
+          }
+          if (!res.following) {
+            res.following = [];
+          }
+
           console.log(res);
           callback(0, res);
         } else {
@@ -32,16 +44,3 @@ module.exports.getFullUser = function (email, callback) {
     }
   );
 };
-/*
-module.exports.getForum = function (short_name, callback) {
-  db.query('SELECT * FROM forums WHEREE short_name = ?',
-    [short_name],
-    function (err, res) {
-      if (err) {
-        errors.sendSqlError(err, callback);
-      } else {
-        callback(0, res);
-      }
-  });
-
-};*/

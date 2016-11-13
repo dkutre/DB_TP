@@ -14,6 +14,7 @@ forumRouter.post('/create', function (req, res) {
 });
 
 forumRouter.get('/details', function (req, res) {
+  console.log('forum_details');
   functions.forumDetails(req.query, callback(res));
 });
 
