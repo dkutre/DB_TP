@@ -1,39 +1,35 @@
-var errors = require('../errors');
 var db = require('../connection');
-var functions = require('../system_fucntions');
+var helper = require('../system_fucntions');
+var async = require('async');
+var views = require('../views');
+var error = helper.errors;
+var userDetails = require('./details');
 
 
-function follow(data, callback) {
-  console.log(data);
-  if (!data.follower || !data.followee) {
-    errors.sendError(3, callback);
-  } else {
-    console.log('follow_func');
-    db.query('SELECT COUNT(*) AS count FROM followers WHERE follower_email = ? AND followee_email = ?;',
-      [data.follower, data.folowee],
-      function (err, res) {
-        if (err) {
-          console.log(err);
-          errors.sendSqlError(err, callback);
-        }
-        if (res > 0) {
-          error.sendError(4, callback);
-        } else {
-          db.query('INSERT INTO followers (follower_email, followee_email) values (?, ?);',
-            [data.follower, data.followee],
-            function (err, res) {
-              if (err) {
-                console.log(err);
-                errors.sendSqlError(err, callback);
-                //error;
-              } else {
-                functions.getFullUser(data.follower, callback);
-              }
-            });
-        }
-      }
-    );
+function follow(dataObject, responceCallback) {
+  if (!helper.checkFields(dataObject, ['follower', 'followee'])) {
+    responceCallback(error.requireFields.code, error.requireFields.message);
+    return;
   }
+  db.query("SELECT COUNT(*) AS count FROM followers WHERE followerEmail = ? AND followeeEmail = ?",
+    [dataObject.follower, dataObject.followee],
+    function (err, res) {
+      if (err) err = helper.mysqlError(err.errno);
+      else {
+        if (res.count > 0) err = error.duplicateRecord;
+      }
+      if (err) responceCallback(err.code, err.message);
+      else {
+        //запрос проверен
+        db.query("INSERT INTO followers (followerEmail, followeeEmail) values (?, ?)",
+          [dataObject.follower, dataObject.followee],
+          function (err, res) {
+            if (err) err = helper.mysqlError(err.errno);
+            if (err) responceCallback(err.code, err.message);
+            else userDetails({user: dataObject.follower}, responceCallback);
+          });
+      }
+    });
 }
 
 module.exports = follow;

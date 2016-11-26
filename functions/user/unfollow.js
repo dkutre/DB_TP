@@ -1,23 +1,24 @@
-getError = require('../errors');
 var db = require('../connection');
-var functions = require('../system_fucntions');
+var helper = require('../system_fucntions');
+var async = require('async');
+var views = require('../views');
+var error = helper.errors;
 
-function unfollow(data, callback) {
-  console.log(data);
-  if (!data.follower || !data.follower) {
-    errors.sendError(3, callback);
-  } else {
-    db.query("DELETE FROM followers WHERE follower_email = ? AND followee_email = ?",
-      [data.follower, data.followee],
-      function (err, res) {
-        if (err) {
-          //errors
-          errors.sendSqlError(err, callback);
-        } else {
-          functions.getFullUser(data.follower, callback);
-        }
-      });
+var userDetails = require('./details');
+
+function unfollow(dataObject, responceCallback) {
+  if (!helper.checkFields(dataObject, ['follower', 'followee'])) {
+    responceCallback(error.requireFields.code, error.requireFields.message);
+    return;
   }
+  db.query("DELETE FROM followers WHERE followerEmail = ? AND followeeEmail = ?",
+    [dataObject.follower, dataObject.followee],
+    function (err, res) {
+      if (err) err = helper.mysqlError(err.errno);
+      if (err) responceCallback(err.code, err.message);
+      else userDetails({user: dataObject.follower}, responceCallback);
+    });
 }
+
 
 module.exports = unfollow;
