@@ -19,7 +19,7 @@ sys.path.append('../doc')
 import tools
 from doc_conf import DISCR
 
-CONFIG_PATH = '../test.conf'
+CONFIG_PATH = './test.conf'
 settings = tools.Configuration(CONFIG_PATH).get_section('func_test')
 
 class TestLog(object):

@@ -15,16 +15,7 @@ function create(data, callback) {
   if (!data.email) {
     console.log('email_undefined');
     errors.sendError(3, callback); // некорректный сапрос
-  }/*
-  if (!data.name) {
-    data.name = '';
   }
-  if (!data.username) {
-    data.username = '';
-  }
-  if (!data.about) {
-    data.about = '';
-  }*/
 
   db.query("INSERT INTO users (username, about, name, email, isAnonymous) VALUES (?, ?, ?, ?, ?);",
     [data.username, data.about, data.name, data.email, data.isAnonymous],

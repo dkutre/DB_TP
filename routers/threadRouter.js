@@ -14,7 +14,6 @@ threadRouter.post('/close', function (req, res) {
 });
 
 threadRouter.post('/create', function (req, res) {
-  console.log('thread_create');
   functions.threadCreate(req.body, callback(res));
 });
 

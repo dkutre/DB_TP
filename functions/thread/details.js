@@ -2,64 +2,61 @@ var errors = require('../errors');
 var db = require('../connection');
 var functions = require('../system_fucntions');
 var forumDetails = require('../forum/details');
+var async = require('async');
 
-
-function details(data, callback) {
-  if (!data.thread) {
+function details(data, responseCallback) {
+  if (!data.thread || data.thread < 0) {
     errors.sendError(3, callback);
-  }
-  console.log('data', data);
-  db.query('SELECT * FROM threads WHERE id = ?',
-    [data.thread],
-    function (err, result) {
-      if (err) {
-        console.log(err);
-        errors.sendSqlError(err, callback);
-      }
-
-      result = result[0]; // извлекаем из rowdatapack
-      console.log('result:', result);
-      if (data.related && data.related[0] != data.related[1]) {
-        if (data.related[0] === 'user' || data.related[1] === 'user') {
-          functions.getFullUser(result.user, function (err, res) {
-            if (err) {
-              errors.sendSqlError(err, callback);
-            } else {
-              result.user = res;
-              if (data.related[0] === 'forum' || data.related[1] === 'forum') {
-                forumDetails({forum: result.forumShortName}, function (err, res) {
-                  if (err) {
-                    console.log('forum_details неизвестная ошибка', err);
-                  }
-                  result.forum = res;
-                  console.log('thread_details_result', result);
-                  callback(0, result);
-                });
-              }
-            }
-          });
-        } else if (data.related[0] === 'forum' || data.related[1] === 'forum') {
-          forumDetails({forum: result.shortName}, function (err, res) {
-            if (err) {
-              console.log('неизвестная ошибка');
-            } else {
-              result.forum = res;
-              if (data.related[0] === 'user' || data.related[1] === 'user') {
-                functions.getFullUser(result.user, function (err, res) {
-                  if (err) {
-                    errors.sendSqlError(err, callback);
-                  }
-                  result.user = res;
-                  callback(0, result);
-                });
-              }
-            }
-          });
+  } else {
+ //   console.log('data', data);
+    db.query('SELECT * FROM threads WHERE id = ?',
+      [data.thread],
+      function (err, thread) {
+        if (err) {
+          console.log(err);
+          errors.sendSqlError(err, callback);
         }
-      } else {
-        callback(0, result);
+          thread = Object.assign({}, thread[0]); // извлекаем из rowdatapack
+        //thread = JSON.stringify(thread);
+        //console.log('result:', result);
+        if (data.related) {
+          async.parallel({
+              user: function (callback) {
+                if (data.related.indexOf('user') + 1) {
+                  functions.getFullUser(thread.user, function (err, user) {
+                    callback(0, user);
+                  });
+                } else {
+                  callback(0, thread.user);
+                }
+              },
+              forum: function (callback) {
+                if (data.related.indexOf('forum') + 1) {
+                  forumDetails({forum: thread.forumShortName}, function (err, forum) {
+                    callback(0, forum);
+                  });
+                } else {
+                  callback(0, thread.forumShortName);
+                }
+              }
+            },
+            function (err, results) {
+              if (err) {
+                console.log('thread_details_async_error', err);
+              } else {
+                thread.forum = results.forum;
+                thread.user = results.user;
+             //   console.log('thread_details_result', thread);
+                responseCallback(0, thread);
+              }
+            }
+          );
+        } else {
+          responseCallback(0, thread);
+        }
       }
-    });
+    );
+  }
 }
 
 module.exports = details;

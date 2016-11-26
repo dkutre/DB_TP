@@ -6,6 +6,7 @@ var callback = require('../response');
 
 postRouter.use(function (req, res, next) {
   console.log("/post");
+  next();
 });
 
 postRouter.post('/create', function (req, res) {
@@ -14,7 +15,7 @@ postRouter.post('/create', function (req, res) {
 
 
 postRouter.get('/details', function (req, res) {
-  functions.postDetails(callback(res));
+  functions.postDetails(req.query, callback(res));
 });
 
 postRouter.get('/list', function (req, res) {

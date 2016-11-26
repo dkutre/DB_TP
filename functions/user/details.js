@@ -2,7 +2,7 @@ var functions = require('../system_fucntions');
 var errors = require('../errors');
 
 function details(data, callback) {
-  console.log(data);
+//  console.log(data);
   if (!data.user) {
     errors.sendError(3, callback);
   }
