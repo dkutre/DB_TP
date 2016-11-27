@@ -2,12 +2,7 @@ var db = require('./connection');
 var views = require('./views');
 var errors = require('./errors');
 
-/**
- * Проверяет наличие и наполненность указанных свойств в объекте
- * @param  {[Object]} dataObject
- * @param  {[Array]} requriedFields
- * @return {Boolean}
- */
+
 function checkFields(dataObject, requriedFields) {
   for (let i = 0; i < requriedFields.length; i++) {
     if ((dataObject.hasOwnProperty(requriedFields[i])) &&
@@ -19,12 +14,7 @@ function checkFields(dataObject, requriedFields) {
 }
 
 module.exports.checkFields = checkFields;
-/**
- * Проверяет все ли значения первого массива подходят под возможные значения второго и нет ли среди них лишних
- * @param  {Array} dataObject
- * @param  {Array} requriedFields
- * @return {Boolean}
- */
+
 function possibleValuesForVarieble(dataObject, requriedFields) {
   if (!(dataObject instanceof Array)) dataObject = [dataObject];
   for (let j = 0; j < dataObject.length; j++) {
@@ -39,12 +29,7 @@ function possibleValuesForVarieble(dataObject, requriedFields) {
 
 module.exports.possibleValuesForVarieble = possibleValuesForVarieble;
 
-/**
- * Проверяет подходит ли значение под возможные варинаты
- * @param  {Array} dataObject
- * @param  {Array} possibleValues
- * @return {Boolean}
- */
+
 function possibleValues(dataObject, possibleValues) {
   for (let key = 0; key < dataObject.length; key++) {
     //TODO улучшить через every
@@ -58,12 +43,7 @@ function possibleValues(dataObject, possibleValues) {
 }
 module.exports.possibleValues = possibleValues;
 
-/**
- * Проверяет содержится ли значение value в массиве dataArray
- * @param  {String}  value
- * @param  {Array}  dataArray
- * @return {Boolean}
- */
+
 function isEntry(value, dataArray) {
   //на тот случай если dataArray не окажется массивом
   //преобразуем в массив
@@ -76,10 +56,8 @@ function isEntry(value, dataArray) {
 }
 module.exports.isEntry = isEntry;
 
-/**
- * Ошибки и их коды
- */
-errors = {
+
+var errors = {
   requireFields: {
     code: 2,
     message: "Не хватает параметров в запросе"
@@ -102,34 +80,29 @@ errors = {
   },
   notWrite: {
     code: 1,
-    message: "Ошибка записи, почему-то не записалось(("
+    message: "Ошибка записи"
   },
   notMemory: {
     code: 4,
-    message: "Алфавита не хватает для записи постов в этот уровень"
+    message: ""
   }
 };
 
 module.exports.errors = errors;
-/**
- * Интерпритатор ошибок из mysql
- * @param  {Number} errCode код ошибки из mysql
- * @return подбирает нужную ошибку из errors
- */
+
 function mysqlError(errCode) {
   switch(errCode) {
     case 1062:
-      return this.errors.duplicateRecord;
+      return errors.duplicateRecord;
       break;
     case 1064:
-      return this.errors.semantic;
+      return errors.semantic;
       break;
     case 1327:
-      return this.errors.semantic;
+      return errors.semantic;
       break;
     default:
-      //console.log(errCode);
-      return this.errors.unknown;
+      return errors.unknown;
       break;
   }
 }
@@ -137,10 +110,7 @@ function mysqlError(errCode) {
 module.exports.mysqlError = mysqlError;
 
 function getSQLForFollowers(target, wherefore, parameter) {
-  /**
-   * select followerEmail from followers JOIN user ON user.email = followers.followeeEmail WHERE followers.followeeEmail = 'example@mail.ru';
-   */
-  let sql = 'SELECT ' + target + ' FROM followers ';
+   let sql = 'SELECT ' + target + ' FROM followers ';
   if (parameter.order !== 'asc') {
     parameter.order = 'desc';
   }
@@ -161,14 +131,6 @@ function getSQLForFollowers(target, wherefore, parameter) {
 module.exports.getSQLForFollowers = getSQLForFollowers;
 
 function moreDetails(dataObject, responceCallback) {
-  //TODO оптимизировать
-  /*SELECT about, email, user.id, GROUP_CONCAT(DISTINCT f1.followeeEmail SEPARATOR ', ') AS followers, GROUP_CONCAT(DISTINCT f2.followerEmail SEPARATOR ', ') AS following, isAnonymous, name, GROUP_CONCAT(DISTINCT threadId SEPARATOR ', ') AS subscriptions, username
-   FROM user
-   LEFT JOIN subscribes ON email = userEmail
-   LEFT JOIN followers AS f1 ON f1.followerEmail = email
-   LEFT JOIN followers AS f2 ON f2.followeeEmail = email
-   WHERE email = "example34@mail.ru"
-   GROUP BY email;*/
   db.query("SELECT isAnonymous, username, about, email, user.id, GROUP_CONCAT(DISTINCT f1.followeeEmail SEPARATOR ', ') AS followers, GROUP_CONCAT(DISTINCT f2.followerEmail SEPARATOR ', ') AS following, isAnonymous, name, GROUP_CONCAT(DISTINCT threadId SEPARATOR ', ') AS subscriptions, username " +
     " FROM user " +
     " LEFT JOIN subscribes ON email = userEmail " +
@@ -201,9 +163,7 @@ function moreDetails(dataObject, responceCallback) {
 
 module.exports.moreDetails = moreDetails;
 
-/**
- * составитель запросов для user.ListPosts
- */
+
 function getSQLforListPosts(dataObject) {
   let sql = "SELECT date, dislikes, forumShortname, id AS postId, isApproved, isDeleted, isEdited, isHighlighted, isSpam, likes, message, parent, points, threadId, userEmail AS email FROM post "
   sql += 'WHERE (userEmail = "' + dataObject.user + '") ';
@@ -225,15 +185,9 @@ function getSQLforListPosts(dataObject) {
 
 module.exports.getSQLforListPosts = getSQLforListPosts;
 
-/**
- * Функция обертка для дозаписи юзера в ответ
- * @param  {Function} responceCallback
- * @param  {Object} results
- * @return {Function} callback for userModel.moreDetails
- */
+
 function wrapperFunctionForDetails(responceCallback, results) {
   return function(code, info) {
-    // предполагается, что code === 0, так как юзер должен быть
     responceCallback(code, views.forum(results, info));
   }
 }
