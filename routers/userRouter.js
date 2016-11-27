@@ -41,9 +41,9 @@ userRouter.post('/updateProfile', function (req, res) {
 });
 
 
-userRouter.post('/listPosts', function (req, res) {
+userRouter.get('/listPosts', function (req, res) {
   console.log('user_listPosts');
-  functions.userListPosts(req.body, callback(res));
+  functions.userListPosts(req.query, callback(res));
 });
 
 

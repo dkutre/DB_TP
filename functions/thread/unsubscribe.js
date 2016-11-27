@@ -5,13 +5,18 @@ var views = require('./../views');
 
 
 function unsubscribe(dataObject, responceCallback) {
-  connection.db.query(' DELETE FROM subscribes WHERE (userEmail = ?) AND (threadID = ?);',
+  db.query(' DELETE FROM subscribes WHERE (userEmail = ?) AND (threadID = ?);',
     [dataObject.user, dataObject.thread],
-    function(err, res) {
-      if (err) err = helper.mysqlError(err.errno);
-      if (err) responceCallback(err.code, err.message);
-      responceCallback(0, dataObject);
-    });
+    function (err, res) {
+      if (err) {
+        err = helper.mysqlError(err.errno);
+        responceCallback(err.code, err.message);
+      }
+      else {
+        responceCallback(0, dataObject);
+      }
+    }
+  );
 }
 
 module.exports = unsubscribe;

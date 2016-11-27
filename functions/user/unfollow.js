@@ -14,10 +14,14 @@ function unfollow(dataObject, responceCallback) {
   db.query("DELETE FROM followers WHERE followerEmail = ? AND followeeEmail = ?",
     [dataObject.follower, dataObject.followee],
     function (err, res) {
-      if (err) err = helper.mysqlError(err.errno);
-      if (err) responceCallback(err.code, err.message);
-      else userDetails({user: dataObject.follower}, responceCallback);
-    });
+      if (err) {
+        err = helper.mysqlError(err.errno);
+        responceCallback(err.code, err.message);
+      } else {
+        userDetails({user: dataObject.follower}, responceCallback);
+      }
+    }
+  );
 }
 
 

@@ -16,25 +16,29 @@ function details(dataObject, responceCallback) {
 
   db.query('SELECT * FROM forum WHERE shortname = ?',
     [dataObject.forum], function (err, res) {
-      if (err)
-        err = helper.mysqlError(err.errno); else {
-        if (res.length === 0)
+      if (err) {
+        err = helper.mysqlError(err.errno);
+        responceCallback(err.code, err.message);
+      } else {
+        if (res.length === 0) {
           err = error.norecord;
-      }
-      if (err) responceCallback(err.code, err.message);
-      else {
-        res = res[0];
-        if (dataObject.related === 'user') {
-          var userObject = {
-            user: res.userEmail
-          };
-          helper.moreDetails(userObject,
-            helper.wrapperFunctionForDetails(responceCallback, res));
-        } else {
-          responceCallback(0, views.forum(res, res.userEmail));
+          responceCallback(err.code, err.message);
+        }
+        else {
+          res = res[0];
+          if (dataObject.related === 'user') {
+            var userObject = {
+              user: res.userEmail
+            };
+            helper.moreDetails(userObject,
+              helper.wrapperFunctionForDetails(responceCallback, res));
+          } else {
+            responceCallback(0, views.forum(res, res.userEmail));
+          }
         }
       }
-    });
+    }
+  );
 }
 
 module.exports = details;

@@ -8,11 +8,15 @@ var error = helper.errors;
 function close(dataObject, responceCallback) {
   db.query('UPDATE thread SET isClosed = true WHERE id = ?',
     [dataObject.thread],
-    function(err, res) {
-      if (err) err = helper.mysqlError(err.errno);
-      if (err) responceCallback(err.code, err.message);
-      responceCallback(0, dataObject);
-    });
+    function (err, res) {
+      if (err) {
+        err = helper.mysqlError(err.errno);
+        responceCallback(err.code, err.message);
+      } else {
+        responceCallback(0, dataObject);
+      }
+    }
+  );
 }
 
 module.exports = close;

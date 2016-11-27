@@ -8,8 +8,12 @@ function getSQLforList(dataObject) {
   //проверить поля
   let sql = "SELECT date, dislikes, forumShortname, id, isApproved, isDeleted, isEdited, isHighlighted, isSpam, likes, message, parent, points, threadId, userEmail FROM post "
 
-  if (dataObject.forum) sql += 'WHERE (forumShortname = "' + dataObject.forum + '") ';
-  if (dataObject.thread) sql += 'WHERE (threadId = "' + dataObject.thread + '") ';
+  if (dataObject.forum) {
+    sql += 'WHERE (forumShortname = "' + dataObject.forum + '") ';
+  }
+  if (dataObject.thread) {
+    sql += 'WHERE (threadId = "' + dataObject.thread + '") ';
+  }
 
   if (dataObject.since) {
     sql += ' AND (date >= "' + dataObject.since + '") ';
@@ -29,15 +33,18 @@ function getSQLforList(dataObject) {
 function postList(dataObject, responceCallback) {
   db.query(getSQLforList(dataObject), [],
     function (err, res) {
-      if (err) err = helper.mysqlError(err.errno);
-      if (err) responceCallback(err.code, err.message)
+      if (err) {
+        err = helper.mysqlError(err.errno);
+        responceCallback(err.code, err.message);
+      }
       else {
-        res = res.map(function (node) {
+        res = res.map((node) => {
           return views.post(node, node.forumShortname, node.threadId, node.userEmail);
         });
         responceCallback(0, res);
       }
-    });
+    }
+  );
 }
 
 module.exports = postList;

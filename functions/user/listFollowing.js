@@ -16,38 +16,40 @@ function listFollowing(dataObject, responceCallback) {
   }
   db.query(helper.getSQLForFollowers('followerEmail', 'followeeEmail', dataObject),
     [dataObject.user],
-    function(err, res) {
-      if (err) err = helper.mysqlError(err.errno);
-      if (err) responceCallback(err.code, err.message);
-      else {
+    function (err, res) {
+      if (err) {
+        err = helper.mysqlError(err.errno);
+        responceCallback(err.code, err.message);
+      } else {
         if (res.length === 0) {
           responceCallback(0, []);
-          return;
-        }
-        //преобразуем обекты содержащие emailы в функции для асинхронного вызова
-        res = res.map( function(elem) {
-          return function (callback) {
-            var userEmail = {
-              user: elem.followerEmail
-            };
-            userDetails(userEmail,
-              function(code, res) {
+        } else {
+          //создадим функции для запроса userDetails'ов
+          res = res.map(elem => {
+            return function (callback) {
+              var userEmail = {
+                user: elem.followerEmail
+              };
+              userDetails(userEmail, (code, res) => {
                 callback(null, res);
               });
-          }
-        });
-        //асинхронный запрос всех юзеров
-        async.parallel(res,
-          function (err, results){
-            if (err) responceCallback(err.code, err.message);
-            else {
-              responceCallback(0, results);
             }
           });
+          //асинхронный запрос всех юзеров
+          async.parallel(res, function (err, results) {
+              if (err) {
+                responceCallback(err.code, err.message);
+              }
+              else {
+                responceCallback(0, results);
+              }
+            }
+          );
+        }
       }
-    });
+    }
+  );
 }
-
 
 
 module.exports = listFollowing;

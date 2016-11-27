@@ -8,43 +8,68 @@ var error = helper.errors;
 function create(dataObject, responceCallback) {
   if (!helper.checkFields(dataObject, ['name', 'short_name', 'user'])) {
     responceCallback(error.requireFields.code, error.requireFields.message);
-    return;
-  }
-  async.series([function (callback) {
-    db.query("SELECT COUNT(*) AS count FROM user WHERE email = ?",
-      [dataObject.user], function (err, res) {
-        if (err)
-          err = helper.mysqlError(err.errno); else {
-          if (res[0].count == 0)
-            err = error.norecord;
+  } else {
+    async.series([
+        function (callback) {
+          db.query("SELECT COUNT(*) AS count FROM user WHERE email = ?",
+            [dataObject.user], function (err, res) {
+              if (err) {
+                err = helper.mysqlError(err.errno);
+                callback(err, null);
+              } else {
+                if (res[0].count == 0) {
+                  err = error.norecord;
+                  callback(err, null);
+                }
+                else {
+                  callback(null, res);
+                }
+              }
+            }
+          );
+        },
+        function (callback) {
+          db.query("INSERT INTO forum (name, shortname, userEmail) values (?, ?, ?)",
+            [dataObject.name, dataObject.short_name, dataObject.user], function (err, res) {
+              if (err) {
+                callback(helper.mysqlError(err.errno), null);
+              }
+              else {
+                callback(null, null);
+              }
+            }
+          );
+        },
+        function (callback) {
+          db.query('SELECT * FROM forum WHERE shortname = ?',
+            [dataObject.short_name], function (err, res) {
+              if (err) {
+                err = helper.mysqlError(err.errno);
+                callback(err, null);
+              } else {
+                if (res.length === 0) {
+                  err = error.notWrite;
+
+                  callback(err, null);
+                }
+                else {
+                  callback(null, res);
+                }
+              }
+            }
+          );
         }
-        if (err) callback(err, null);
-        else callback(null, res);
-      });
-  }, function (callback) {
-    db.query("INSERT INTO forum (name, shortname, userEmail) values (?, ?, ?)",
-      [dataObject.name, dataObject.short_name, dataObject.user], function (err, res) {
-        if (err) callback(helper.mysqlError(err.errno), null);
-        else callback(null, null);
-      });
-  }, function (callback) {
-    db.query('SELECT * FROM forum WHERE shortname = ?',
-      [dataObject.short_name], function (err, res) {
-        if (err)
-          err = helper.mysqlError(err.errno); else {
-          if (res.length === 0)
-            err = error.notWrite;
+      ],
+      function (err, results) {
+        if (err) {
+          responceCallback(err.code, err.message);
+        } else {
+          results = results[2][0];
+          responceCallback(0, views.forum(results, results.userEmail));
         }
-        if (err) callback(err, null);
-        else callback(null, res);
-      });
+      }
+    );
   }
-  ], function (err, results) {
-    if (err) responceCallback(err.code, err.message); else {
-      results = results[2][0];
-      responceCallback(0, views.forum(results, results.userEmail));
-    }
-  });
 }
 
 module.exports = create;

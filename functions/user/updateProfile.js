@@ -13,20 +13,29 @@ function updateProfile(dataObject, responceCallback) {
   db.query("SELECT COUNT(*) AS count FROM user WHERE email = ?",
     [dataObject.user],
     function (err, res) {
-      if (err) err = helper.mysqlError(err.errno)
-      else {
-        if (res.count == 0) err = error.norecord;
+      if (err) {
+        err = helper.mysqlError(err.errno);
+        responceCallback(err.code, err.message);
       }
-      if (err) responceCallback(err.code, err.message);
       else {
-        db.query("UPDATE user SET name = ?, about = ? WHERE email = ?",
-          [dataObject.name, dataObject.about, dataObject.user],
-          function (err, res) {
-            if (err) responceCallback(err.code, err.message);
-            else userDetails({user: dataObject.user}, responceCallback);
-          });
+        if (res.count == 0) {
+          err = error.norecord;
+          responceCallback(err.code, err.message);
+        } else {
+          db.query("UPDATE user SET name = ?, about = ? WHERE email = ?",
+            [dataObject.name, dataObject.about, dataObject.user],
+            function (err, res) {
+              if (err) {
+                responceCallback(err.code, err.message);
+              } else {
+                userDetails({user: dataObject.user}, responceCallback);
+              }
+            }
+          );
+        }
       }
-    });
+    }
+  );
 }
 
 module.exports = updateProfile;

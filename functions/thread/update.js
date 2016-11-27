@@ -6,13 +6,16 @@ var threadDetails = require('./details');
 function update(dataObject, responceCallback) {
   db.query('UPDATE thread SET message = ?, slug = ? WHERE id = ?;',
     [dataObject.message, dataObject.slug, dataObject.thread],
-    function(err, res) {
-      if (err) err = helper.mysqlError(err.errno);
-      if (err) responceCallback(err.code, err.message)
+    function (err, res) {
+      if (err) {
+        err = helper.mysqlError(err.errno);
+        responceCallback(err.code, err.message);
+      }
       else {
         threadDetails({thread: dataObject.thread}, responceCallback);
       }
-    });
+    }
+  );
 }
 
 module.exports = update;

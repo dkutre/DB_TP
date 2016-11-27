@@ -9,7 +9,7 @@ var errors = require('./errors');
  * @return {Boolean}
  */
 function checkFields(dataObject, requriedFields) {
-  for (var i = 0; i < requriedFields.length; i++) {
+  for (let i = 0; i < requriedFields.length; i++) {
     if ((dataObject.hasOwnProperty(requriedFields[i])) &&
       (dataObject[requriedFields[i]] === null)) {
       return false;
@@ -27,9 +27,9 @@ module.exports.checkFields = checkFields;
  */
 function possibleValuesForVarieble(dataObject, requriedFields) {
   if (!(dataObject instanceof Array)) dataObject = [dataObject];
-  for (var j = 0; j < dataObject.length; j++) {
-    var flag = false;
-    for (var i = 0; i < requriedFields.length; i++) {
+  for (let j = 0; j < dataObject.length; j++) {
+    let flag = false;
+    for (let i = 0; i < requriedFields.length; i++) {
       if (requriedFields[i]===dataObject[j]) flag = true;
     }
     if (flag !== true) return false;
@@ -46,11 +46,11 @@ module.exports.possibleValuesForVarieble = possibleValuesForVarieble;
  * @return {Boolean}
  */
 function possibleValues(dataObject, possibleValues) {
-  for (var key = 0; key < dataObject.length; key++) {
+  for (let key = 0; key < dataObject.length; key++) {
     //TODO улучшить через every
     //если не определенная переменная
     if (dataObject[key] === undefined) return true;
-    for (var i = 0; i < possibleValues[key].length; i++) {
+    for (let i = 0; i < possibleValues[key].length; i++) {
       if (dataObject[key] === possibleValues[key][i]) return true;
     }
   }
@@ -69,7 +69,7 @@ function isEntry(value, dataArray) {
   //преобразуем в массив
   if (!(dataArray instanceof Array)) dataArray = [dataArray];
 
-  for (var i = 0; i < dataArray.length; i++) {
+  for (let i = 0; i < dataArray.length; i++) {
     if (value === dataArray[i]) return true;
   }
   return false;
@@ -140,7 +140,7 @@ function getSQLForFollowers(target, wherefore, parameter) {
   /**
    * select followerEmail from followers JOIN user ON user.email = followers.followeeEmail WHERE followers.followeeEmail = 'example@mail.ru';
    */
-  var sql = 'SELECT ' + target + ' FROM followers ';
+  let sql = 'SELECT ' + target + ' FROM followers ';
   if (parameter.order !== 'asc') {
     parameter.order = 'desc';
   }
@@ -205,7 +205,7 @@ module.exports.moreDetails = moreDetails;
  * составитель запросов для user.ListPosts
  */
 function getSQLforListPosts(dataObject) {
-  sql = "SELECT date, dislikes, forumShortname, id AS postId, isApproved, isDeleted, isEdited, isHighlighted, isSpam, likes, message, parent, points, threadId, userEmail AS email FROM post "
+  let sql = "SELECT date, dislikes, forumShortname, id AS postId, isApproved, isDeleted, isEdited, isHighlighted, isSpam, likes, message, parent, points, threadId, userEmail AS email FROM post "
   sql += 'WHERE (userEmail = "' + dataObject.user + '") ';
 
   if (dataObject.since) {
