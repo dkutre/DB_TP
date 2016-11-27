@@ -26,11 +26,13 @@ userRouter.post('/follow', function (req, res) {
 });
 
 userRouter.get('/listFollowers', function (req, res) {
-  functions.userListFollowers(callback(res));
+  console.log('user_listFollowers');
+  functions.userListFollowers(req.query, callback(res));
 });
 
 userRouter.get('/listFollowing', function (req, res) {
-  functions.userListFollowing(callback(res));
+  console.log('user_listFollowing');
+  functions.userListFollowing(req.query, callback(res));
 });
 
 userRouter.post('/updateProfile', function (req, res) {
@@ -40,7 +42,8 @@ userRouter.post('/updateProfile', function (req, res) {
 
 
 userRouter.post('/listPosts', function (req, res) {
-  functions.userListPosts(callback(res));
+  console.log('user_listPosts');
+  functions.userListPosts(req.body, callback(res));
 });
 
 

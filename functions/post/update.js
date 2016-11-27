@@ -2,7 +2,7 @@ var db = require('../connection');
 var helper = require('../system_fucntions');
 var async = require('async');
 var views = require('../views');
-var postDetails = ('../post/details');
+var postDetails = require('./details');
 
 function update(dataObject, responceCallback) {
   db.query('UPDATE post SET message = ? WHERE id = ?;',

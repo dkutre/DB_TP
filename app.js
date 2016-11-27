@@ -17,9 +17,9 @@ app.use(bodyParser.json());
 
 
 app.use(API_URL + 'user',   userRouter);
-//app.use(API_URL + 'thread', threadRouter);
+app.use(API_URL + 'thread', threadRouter);
 app.use(API_URL + 'forum',  forumRouter);
-//app.use(API_URL + 'post',   postRouter);
+app.use(API_URL + 'post',   postRouter);
 app.use(API_URL, router);
 
 

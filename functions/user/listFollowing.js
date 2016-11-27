@@ -14,7 +14,7 @@ function listFollowing(dataObject, responceCallback) {
     responceCallback(error.requireFields.code, error.requireFields.message);
     return;
   }
-  connection.db.query(helper.getSQLForFollowers('followerEmail', 'followeeEmail', dataObject),
+  db.query(helper.getSQLForFollowers('followerEmail', 'followeeEmail', dataObject),
     [dataObject.user],
     function(err, res) {
       if (err) err = helper.mysqlError(err.errno);
@@ -29,7 +29,7 @@ function listFollowing(dataObject, responceCallback) {
           return function (callback) {
             var userEmail = {
               user: elem.followerEmail
-            }
+            };
             userDetails(userEmail,
               function(code, res) {
                 callback(null, res);

@@ -2,7 +2,7 @@ var db = require('../connection');
 var helper = require('../system_fucntions');
 var async = require('async');
 var views = require('../views');
-var postDetails = ('../post/details');
+var postDetails = require('../post/details');
 
 function vote(dataObject, responceCallback) {
   db.query('UPDATE post SET points = points + ?,  likes = likes + IF(? = 1, 1, 0),  dislikes = dislikes + IF(? = -1, 1, 0) WHERE id = ?;',

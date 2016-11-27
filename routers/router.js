@@ -10,10 +10,12 @@ router.use(function (req, res, next) {
 });
 
 router.post('/clear', function (req, res) {
+  console.log('clear');
   functions.clear(callback(res));
 });
 
 router.get('/status', function (req, res) {
+  console.log('status');
   functions.status(callback(res));
 });
 

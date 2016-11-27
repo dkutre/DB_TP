@@ -19,16 +19,19 @@ forumRouter.get('/details', function (req, res) {
 });
 
 forumRouter.get('/listPosts', function (req, res) {
-  functions.forumListPosts(callback(res));
+  console.log('forum_listPosts');
+  functions.forumListPosts(req.query, callback(res));
 });
 
 
 forumRouter.get('/listThreads', function (req, res) {
-  functions.forumListThreads(callback(res));
+  console.log('forum_listThreads');
+  functions.forumListThreads(req.query, callback(res));
 });
 
 forumRouter.get('/listUsers', function (req, res) {
-  functions.forumListUsers(callback(res));
+  console.log('forum_listUsers');
+  functions.forumListUsers(req.query, callback(res));
 });
 
 

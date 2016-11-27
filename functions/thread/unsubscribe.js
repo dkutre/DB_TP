@@ -1,20 +1,16 @@
-var errors = require('../errors');
 var db = require('../connection');
-var functions = require('../system_fucntions');
+var helper = require('../system_fucntions');
+var async = require('async');
+var views = require('./../views');
 
 
-function unsubscribe(data, callback) {
-  if (!data.user || !data.thread) {
-    errors.sendError(3, callback);
-  }
-  db.query('DELETE FROM subscribes WHERE (user_email = ?) AND (thread_id = ?);',
-    [data.user, data.thread],
-    function (err, res) {
-      if (err) {
-        errors.sendSqlError(err, callback);
-      } else {
-        callback(0, data);
-      }
+function unsubscribe(dataObject, responceCallback) {
+  connection.db.query(' DELETE FROM subscribes WHERE (userEmail = ?) AND (threadID = ?);',
+    [dataObject.user, dataObject.thread],
+    function(err, res) {
+      if (err) err = helper.mysqlError(err.errno);
+      if (err) responceCallback(err.code, err.message);
+      responceCallback(0, dataObject);
     });
 }
 

@@ -1,22 +1,19 @@
-var errors = require('../errors');
 var db = require('../connection');
-var functions = require('../system_fucntions');
+var helper = require('../system_fucntions');
+var async = require('async');
+var views = require('./../views');
 
 
-function subscribe(data, callback) {
-  if (!data.thread || !data.user) {
-    errors.sendError(3, callback);
-  }
 
-  db.query('INSERT INTO subscribes (user_email, thread_id) values (?, ?);',
-    [data.user, data.thread],
-    function (err, res) {
-      if (err) {
-        errors.sendSqlError(err, callback);
-      } else {
-        callback(0, data);
-      }
+function subscribe(dataObject, responceCallback) {
+  db.query('INSERT INTO subscribes (userEmail, threadID) values (?, ?);',
+    [dataObject.user, dataObject.thread],
+    function(err, res) {
+      if (err) err = helper.mysqlError(err.errno);
+      if (err) responceCallback(err.code, err.message);
+      responceCallback(0, dataObject);
     });
 }
+
 
 module.exports = subscribe;
