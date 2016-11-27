@@ -1,23 +1,18 @@
-var errors = require('../errors');
 var db = require('../connection');
-var functions = require('../system_fucntions');
+var helper = require('../system_fucntions');
+var async = require('async');
+var views = require('./../views');
+var error = helper.errors;
 
 
-function close(data, callback) {
-  if (!data.thread) {
-    errors.sendError(3, callback);
-  }
-
-  db.query('UPDATE threads SET isClosed = true WHERE id = ?',
-    [data.thread],
-    function (err, res) {
-      if (err) {
-        errors.sendSqlError(err, callback);
-      } else {
-        callback(0, data);
-      }
-    }
-  );
+function close(dataObject, responceCallback) {
+  db.query('UPDATE thread SET isClosed = true WHERE id = ?',
+    [dataObject.thread],
+    function(err, res) {
+      if (err) err = helper.mysqlError(err.errno);
+      if (err) responceCallback(err.code, err.message);
+      responceCallback(0, dataObject);
+    });
 }
 
 module.exports = close;
