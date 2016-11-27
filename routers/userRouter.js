@@ -10,18 +10,18 @@ userRouter.use(function (req, res, next) {
 });*/
 
 userRouter.post('/create', function (req, res) {
-  //console.log('user_create' + req.body.toString());
+  console.log('user_create' + req.body);
   functions.userCreate(req.body, callback(res));
 });
 
 
 userRouter.get('/details/', function (req, res) {
-  //console.log('user_details ' + req.query);
+  console.log('user_details ' + req.query);
   functions.userDetails(req.query, callback(res));
 });
 
 userRouter.post('/follow', function (req, res) {
- // console.log('user_follow\n' + req.body);
+  console.log('user_follow\n' + req.body);
   functions.userFollow(req.body, callback(res));
 });
 

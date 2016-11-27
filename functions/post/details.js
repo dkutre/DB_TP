@@ -1,104 +1,79 @@
-var errors = require('../errors');
 var db = require('../connection');
-var functions = require('../system_fucntions');
+var helper = require('../system_fucntions');
+var async = require('async');
+var views = require('./../views');
 var forumDetails = require('../forum/details');
 var threadDetails = require('../thread/details');
-var async = require('async');
 
-function details(data, responseCallback) {
-//  console.log('post_details', data);
-  if (!data.post) {
-    errors.sendError(3, responseCallback);
+var error = helper.errors;
+
+function details(dataObject, responceCallback) {
+  if (!helper.checkFields(dataObject, ['post',])) {
+    responceCallback(error.requireFields.code, error.requireFields.message);
+    return;
   }
-
-  db.query('SELECT * FROM posts WHERE id = ?',
-    [data.post], function (err, post) {
-      if (err) {
-        console.log(err);
-        errors.sendSqlError(err, responseCallback);
-      } else {
-        post = Object.assign({}, post[0]);
-        //post = JSON.stringify(post);
-        //console.log('post =', post);
-        if (post.parent === 0) {
-          delete post.parent;
-        }
-        if (post.isHighlighted) {
-          post.isHighlighted = true;
+  db.query('SELECT * FROM post WHERE id = ?',
+    [dataObject.post],
+    function (err, res) {
+      if (err) err = helper.mysqlError(err.errno);
+      if (err) responceCallback(err.code, err.message);
+      else {
+        if (res.length === 0) {
+          responceCallback(error.norecord.code, error.norecord.message);
+          return;
         } else {
-          post.isHighlighted = false;
-        }
-
-        post.forum = 'azazaza';
-        post.thread = 'thread';
-        post.user = 'user';
-        //responseCallback(0, post);
-
-        if (data.related) {
+          //все ок и post найден
+          //отбрасываем лишнее
+          res = res[0];
           async.parallel({
-              // везде прибавлено +1 т.к индекс может быть 0, но строка в массивке есть
-              // если индекса нет, то вернется -1 и будет if(0) т.е как раз не пройдет
               user: function (callback) {
-                if (data.related.indexOf('user') + 1) {
-                  functions.getFullUser(post.userEmail, function (err, user) {
-                    post.user = user;
-                    callback(0, true);
-                    //console.log('user_ok');
+                if (helper.isEntry('user', dataObject.related)) {
+                  //нужно дальше искать информацию по юзеру
+                  var userObject = {
+                    user: res.userEmail
+                  }
+                  helper.moreDetails(userObject, function (code, res) {
+                    callback(null, res);
                   });
                 } else {
-                  post.user = post.userEmail;
-                  callback(0, post.userEmail);
+                  //не нужно дальше искать информацию по юзеру
+                  callback(null, res.userEmail);
                 }
               },
               forum: function (callback) {
-                if (data.related.indexOf('forum') + 1) {
-                  forumDetails({forum: post.forumShortName}, function (err, forum) {
-                    post.forum = forum;
-                    callback(0, true);
-                    //console.log('forum_ok');
+                if (helper.isEntry('forum', dataObject.related)) {
+                  //нужно дальше искать информацию по форуму
+                  var forumObject = {
+                    forum: res.forumShortname
+                  }
+                  forumDetails(forumObject, function (code, res) {
+                    callback(null, res);
                   });
                 } else {
-                  post.forum = post.forumShortName;
-                  callback(0, post.forum);
+                  //не нужно дальше искать информацию по форуму
+                  callback(null, res.forumShortname);
                 }
               },
-              thr: function (callback) {
-                if (data.related.indexOf("thread") + 1) {
-                  console.log('lel');
-                  threadDetails({thread: post.thread_id}, function (err, res) {
-                    post.thread = '';
-                    callback(0, true);
+              thread: function (callback) {
+                if (helper.isEntry('thread', dataObject.related)) {
+                  //нужно дальше искать информацию по треду
+                  var threadObject = {
+                    thread: res.threadId
+                  }
+                  threadDetails(threadObject, function (code, res) {
+                    callback(null, res);
                   });
                 } else {
-                  post.thread = post.thread_id;
-                  callback(0, post.thread_id);
+                  //не нужно дальше искать информацию по треду
+                  callback(null, res.threadId);
                 }
               }
             },
             function (err, results) {
-              if (err) {
-                console.log('post_details_async_error', err);
-              } else {
-                delete post.forumShortName;
-                delete post.thread_id;
-                delete post.userEmail;
-                responseCallback(0, post);
-                console.log('print1', post);
-              }
+              if (err) responceCallback(err.code, err.message);
+              else responceCallback(0, views.post(res, results.forum, results.thread, results.user));
             });
         }
-        else {
-          // console.log('post_details_result2 = ', post);
-          post.forum = post.forumShortName;
-          post.thread = post.thread_id;
-          post.user = post.userEmail;
-          delete post.forumShortName;
-          delete post.thread_id;
-          delete post.userEmail;
-          console.log('print2', post);
-          responseCallback(0, post);
-        }
-
       }
     });
 }

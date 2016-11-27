@@ -1,25 +1,50 @@
-var errors = require('../errors');
 var db = require('../connection');
-var functions = require('../system_fucntions');
+var helper = require('../system_fucntions');
+var async = require('async');
+var views = require('../views');
+var error = helper.errors;
 
 
-
-function create(data, callback) {
-  if (!data.name || !data.short_name || !data.user) {
-    errors.sendError(3, callback);
-  } else {
-    db.query("INSERT INTO forums (name, short_name, user) VALUES (?, ?, ?);",
-      [data.name, data.short_name, data.user],
-      function (err, res) {
-        if (err) {
-          errors.sendSqlError(err, callback);
-        } else {
-          data.id = res.insertId;
-          callback(0, data);
-        }
-      }
-    )
+function create(dataObject, responceCallback) {
+  if (!helper.checkFields(dataObject, ['name', 'short_name', 'user'])) {
+    responceCallback(error.requireFields.code, error.requireFields.message);
+    return;
   }
+  async.series([function (callback) {
+    db.query("SELECT COUNT(*) AS count FROM user WHERE email = ?",
+      [dataObject.user], function (err, res) {
+        if (err)
+          err = helper.mysqlError(err.errno); else {
+          if (res[0].count == 0)
+            err = error.norecord;
+        }
+        if (err) callback(err, null);
+        else callback(null, res);
+      });
+  }, function (callback) {
+    db.query("INSERT INTO forum (name, shortname, userEmail) values (?, ?, ?)",
+      [dataObject.name, dataObject.short_name, dataObject.user], function (err, res) {
+        if (err) callback(helper.mysqlError(err.errno), null);
+        else callback(null, null);
+      });
+  }, function (callback) {
+    db.query('SELECT * FROM forum WHERE shortname = ?',
+      [dataObject.short_name], function (err, res) {
+        if (err)
+          err = helper.mysqlError(err.errno); else {
+          if (res.length === 0)
+            err = error.notWrite;
+        }
+        if (err) callback(err, null);
+        else callback(null, res);
+      });
+  }
+  ], function (err, results) {
+    if (err) responceCallback(err.code, err.message); else {
+      results = results[2][0];
+      responceCallback(0, views.forum(results, results.userEmail));
+    }
+  });
 }
 
 module.exports = create;

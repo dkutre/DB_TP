@@ -1,5 +1,5 @@
 var db = require('./connection');
-
+var views = require('./views');
 var errors = require('./errors');
 
 /**
@@ -224,3 +224,19 @@ function getSQLforListPosts(dataObject) {
 }
 
 module.exports.getSQLforListPosts = getSQLforListPosts;
+
+/**
+ * Функция обертка для дозаписи юзера в ответ
+ * @param  {Function} responceCallback
+ * @param  {Object} results
+ * @return {Function} callback for userModel.moreDetails
+ */
+function wrapperFunctionForDetails(responceCallback, results) {
+  return function(code, info) {
+    // предполагается, что code === 0, так как юзер должен быть
+    responceCallback(code, views.forum(results, info));
+  }
+}
+
+
+module.exports.wrapperFunctionForDetails = wrapperFunctionForDetails;
