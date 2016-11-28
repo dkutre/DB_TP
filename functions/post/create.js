@@ -34,11 +34,11 @@ function create(dataObject, responceCallback) {
     responceCallback(error.requireFields.code, error.requireFields.message);
     return;
   }
+
   async.parallel([
       function (callback) {
-        //получаем MaterPath предка
         db.query("SELECT materPath FROM post WHERE (id = ?);",
-          [dataObject.parent, dataObject.thread],
+          [dataObject.parent],
           function (err, res) {
             if (err) {
               callback(helper.mysqlError(err.errno), null);
@@ -50,9 +50,8 @@ function create(dataObject, responceCallback) {
               } else {
                 parentMathPath = res[0].materPath;
               }
-              //находим последнего ребенка у поста предка
-              db.query('SELECT materPath AS max FROM post WHERE (threadId = ?) AND (materPath LIKE ?) ORDER BY materPath DESC LIMIT 1',
-                [dataObject.thread, parentMathPath + '__'],
+              db.query('SELECT materPath AS max FROM post WHERE (threadId = ?) AND (parent = ?) ORDER BY materPath DESC LIMIT 1',
+                [dataObject.thread, dataObject.parent],
                 function (err, res) {
                   if (err) {
                     callback(helper.mysqlError(err.errno), null);
@@ -60,22 +59,18 @@ function create(dataObject, responceCallback) {
                   else {
                     var newMaterPath;
                     if (res.length === 0) {
-                      //предков этого parenta нет, поэтому создаем новый уровень вложенности
                       newMaterPath = parentMathPath + '00';
                     } else {
-                      //2 последних символа строки на один уровень вложенности
                       var tmp = res[0].max.slice(-2);
                       tmp = (parseInt(tmp, 36) + 1).toString(36);
                       while (tmp.length < 2) {
                         tmp = '0' + tmp;
                       }
-                      //больше чем 2 последних символа строки
                       if (tmp.length > 2) {
                         callback(error.notMemory, null);
                       }
                       newMaterPath = parentMathPath + tmp;
                     }
-                    //записываем все что получилось
                     db.query("INSERT INTO post (isApproved, isDeleted, isEdited, isHighlighted, isSpam, message, parent, threadId, date, forumShortname, userEmail, materPath) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
                       [dataObject.isApproved, dataObject.isDeleted, dataObject.isEdited,
                         dataObject.isHighlighted, dataObject.isSpam, dataObject.message, dataObject.parent,
@@ -107,17 +102,19 @@ function create(dataObject, responceCallback) {
               callback(null, res);
             }
           });
-      }],
+      }
+    ],
     function (err, results) {
       if (err) {
         responceCallback(err.code, err.message);
       }
       else {
-        var resp = views.post(dataObject, dataObject.forum, dataObject.thread, dataObject.user);
-        resp.id = results[0].insertId;
-        responceCallback(0, resp);
+        var responce = views.post(dataObject, dataObject.forum, dataObject.thread, dataObject.user);
+        responce.id = results[0].insertId;
+        responceCallback(0, responce);
       }
-    });
+    }
+  );
 }
 
 module.exports = create;

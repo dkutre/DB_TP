@@ -5,17 +5,17 @@ var functions = require('../functions/functions');
 
 
 router.use(function (req, res, next) {
-  console.log("/general");
+  ////console.log("/general");
   next();
 });
 
 router.post('/clear', function (req, res) {
-  console.log('clear');
+  //console.log('clear');
   functions.clear(callback(res));
 });
 
 router.get('/status', function (req, res) {
-  console.log('status');
+  //console.log('status');
   functions.status(callback(res));
 });
 
