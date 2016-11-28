@@ -11,11 +11,13 @@ function myObjPrintf(data, indent) {
 
   for (property in data) {
     if (typeof(data[property]) === "object") {
-      fs.appendFile(file, tab + property + ':\n', (err) => {});
+      fs.appendFile(file, tab + property + ':\n', (err) => {
+      });
       myObjPrintf(data[property], indent + 2);
     } else {
       if (data[property] != ' = ') {
-        fs.appendFile(file, tab + property + ': ' + data[property] + '\n', (err) => {});
+        fs.appendFile(file, tab + property + ': ' + data[property] + '\n', (err) => {
+        });
       }
     }
   }
@@ -25,8 +27,6 @@ function response(res) {
   return function (code, response) {
     res.status(200);
     try {
-      myObjPrintf(response, 0);
-      fs.appendFile(file, '======================================\n', (err) => console.log('printf_err', err));
       res.json({
         "code": code,
         "response": response

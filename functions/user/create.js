@@ -49,6 +49,7 @@ function create(dataObject, responceCallback) {
                 err = error.notWrite;
                 callback(err, null)
               } else {
+                res = res[0];//rowdatapacket
                 callback(null, res);
               }
             }
@@ -60,7 +61,7 @@ function create(dataObject, responceCallback) {
         responceCallback(err.code, err.message);
       }
       else {
-        res = res[1][0];
+        res = res[1];
         responceCallback(0, views.user(res, [], [], []));
       }
     }
