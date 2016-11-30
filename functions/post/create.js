@@ -75,7 +75,7 @@ function create(dataObject, responceCallback) {
                       [dataObject.isApproved, dataObject.isDeleted, dataObject.isEdited,
                         dataObject.isHighlighted, dataObject.isSpam, dataObject.message, dataObject.parent,
                         dataObject.thread, dataObject.date, dataObject.forum, dataObject.user, newMaterPath],
-                      function (err, res) {
+                       function (err, res) {
                         if (err) {
                           callback(helper.mysqlError(err.errno), null);
                         }

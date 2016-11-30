@@ -37,8 +37,8 @@ module.exports.userListFollowing = require('./user/listFollowing');
 module.exports.userListPosts     = require('./user/listPosts');
 module.exports.userUnfollow      = require('./user/unfollow');
 module.exports.userupdateProf    = require('./user/updateProfile');
-
-
+// загрузка базы
+module.exports.loadUserData = require('./user/loadUserData');
 
 
 

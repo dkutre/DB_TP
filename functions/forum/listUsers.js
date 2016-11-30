@@ -34,7 +34,8 @@ function listUsers(dataObject, responceCallback) {
     responceCallback(error.requireFields.code, error.requireFields.message);
     return;
   }
-  db.query(getSQLForListUsers(dataObject), function (err, res) {
+  db.query(getSQLForListUsers(dataObject),
+    function (err, res) {
       if (err) {
         err = helper.mysqlError(err.errno);
         responceCallback(err.code, err.message);

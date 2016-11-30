@@ -3,14 +3,35 @@ var userRouter = express.Router();
 var functions = require('../functions/functions');
 var callback = require('../response');
 var logger = require('../functions/logger');
+var async = require('async');
 /*
-userRouter.use(function (req, res, next) {
-  //console.log("/user");
-  next();
-});*/
+ userRouter.use(function (req, res, next) {
+ //console.log("/user");
+ next();
+ });*/
+var loadUserData = require('../functions/user/loadUserData').loadUserData;
 
-userRouter.post('/create', function (req, res) {
-  //console.log('user_create' + req.body);
+var dataLoader =  new loadUserData();
+
+
+userRouter.post('/create', function (req, res) {/*
+  async.series([
+      function (callback) {
+    debugger;
+        dataLoader.notLoaded(callback);
+      }
+    ],
+    function (err, results) {
+      if (results[0] === true) {
+        debugger;
+     //   console.log('dataloader', dataLoader);
+        dataLoader.loadData(req.body);
+        callback(res)(0, {});
+      } else {
+     //   console.log('usually insert');
+        functions.userCreate(req.body, callback(res));
+      }
+    });*/
   functions.userCreate(req.body, callback(res));
 });
 

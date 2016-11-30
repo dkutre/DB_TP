@@ -43,6 +43,10 @@ CREATE TABLE post (
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE INDEX mathPatg ON post(threadId, parent, materPath);
+
+
+
 DROP TABLE IF EXISTS subscribes;
 CREATE TABLE subscribes (
   userEmail varchar(100) NOT NULL,
@@ -81,4 +85,7 @@ CREATE TABLE user (
   UNIQUE KEY email_UNIQUE (email)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
+
+
+
+

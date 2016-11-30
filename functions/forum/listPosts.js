@@ -22,30 +22,37 @@ function getSQLforListPosts(dataObject) {
 }
 
 function listPosts(dataObject, responceCallback) {
-//TODO оптимизировать
-  db.query(getSQLforListPosts(dataObject), [], function (err, res) {
-      if (err) {
-        err = helper.mysqlError(err.errno);
-        responceCallback(err.code, err.message);
+  if (!helper.checkFields(dataObject, ['forum'])) {
+    responceCallback(error.requireFields.code, error.requireFields.message);
+    return;
+  }
+  else {
+    db.query(getSQLforListPosts(dataObject), [], function (err, res) {
+        if (err) {
+          err = helper.mysqlError(err.errno);
+          responceCallback(err.code, err.message);
+        }
+        else {
+          console.log(res);
+          res = res.map((node) => {
+            return function (callback) {
+              postDetails({post: node.id, related: dataObject.related}, function (code, res) {
+                callback(null, res);
+              });
+            }
+          });
+          console.log(res);
+          async.parallel(res, function (err, res) {
+            if (err) {
+              responceCallback(err.code, err.message);
+            } else {
+              responceCallback(0, res);
+            }
+          });
+        }
       }
-      else {
-        res = res.map((node) => {
-          return function (callback) {
-            postDetails({post: node.id, related: dataObject.related}, function (code, res) {
-              callback(null, res);
-            });
-          }
-        });
-        async.parallel(res, function (err, res) {
-          if (err) {
-            responceCallback(err.code, err.message);
-          } else {
-            responceCallback(0, res);
-          }
-        });
-      }
-    }
-  );
+    );
+  }
 }
 
 module.exports = listPosts;

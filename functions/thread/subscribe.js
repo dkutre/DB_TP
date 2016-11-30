@@ -5,6 +5,11 @@ var views = require('./../views');
 
 
 function subscribe(dataObject, responceCallback) {
+  if (!helper.checkFields(dataObject, ['user', 'thread'])) {
+    responceCallback(error.requireFields.code, error.requireFields.message);
+    return;
+  }
+
   db.query('INSERT INTO subscribes (userEmail, threadID) values (?, ?);',
     [dataObject.user, dataObject.thread],
     function (err, res) {

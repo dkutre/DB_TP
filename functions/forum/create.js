@@ -10,7 +10,7 @@ function create(dataObject, responceCallback) {
     responceCallback(error.requireFields.code, error.requireFields.message);
   } else {
     async.series([
-        function (callback) {
+        /*function (callback) {
           db.query("SELECT COUNT(*) AS count FROM user WHERE email = ?",
             [dataObject.user], function (err, res) {
               if (err) {
@@ -27,19 +27,20 @@ function create(dataObject, responceCallback) {
               }
             }
           );
-        },
+        },*/
         function (callback) {
           db.query("INSERT INTO forum (name, shortname, userEmail) values (?, ?, ?)",
-            [dataObject.name, dataObject.short_name, dataObject.user], function (err, res) {
+            [dataObject.name, dataObject.short_name, dataObject.user],
+            function (err, res) {
               if (err) {
                 callback(helper.mysqlError(err.errno), null);
               }
               else {
-                callback(null, null);
+                callback(null, res.insertId);
               }
             }
           );
-        },
+        }/*,
         function (callback) {
           db.query('SELECT * FROM forum WHERE shortname = ?',
             [dataObject.short_name], function (err, res) {
@@ -58,14 +59,14 @@ function create(dataObject, responceCallback) {
               }
             }
           );
-        }
+        }*/
       ],
       function (err, results) {
         if (err) {
           responceCallback(err.code, err.message);
         } else {
-          results = results[2][0];
-          responceCallback(0, views.forum(results, results.userEmail));
+          dataObject.id = results[0];
+          responceCallback(0, views.forum(dataObject, results.userEmail));
         }
       }
     );
