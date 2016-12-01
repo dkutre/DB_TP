@@ -1,0 +1,63 @@
+DROP TABLE IF EXISTS posts;
+DROP TABLE IF EXISTS threads;
+DROP TABLE IF EXISTS forums;
+DROP TABLE IF EXISTS users;
+
+CREATE TABLE users (
+  id       INT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
+  name     VARCHAR(40) NOT NULL  DEFAULT '',
+  username VARCHAR(40) NOT NULL  DEFAULT '',
+  email    VARCHAR(40) NOT NULL  DEFAULT '',
+  about    TEXT NOT NULL  DEFAULT '',
+  isAnonymous BOOLEAN NOT NULL DEFAULT 0,
+  UNIQUE KEY(email)
+);
+/*=================================================*/
+CREATE TABLE forums (
+  id INT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
+  name        VARCHAR(40) NOT NULL DEFAULT '' UNIQUE KEY,
+  short_name  VARCHAR(20) NOT NULL DEFAULT '' UNIQUE KEY,
+  user        VARCHAR(40) NOT NULL DEFAULT '',
+  UNIQUE KEY (name, short_name)
+);
+/*=================================================*/
+CREATE TABLE  Posts (
+    id            INT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    user          VARCHAR(50) NOT NULL DEFAULT '',
+    message       TEXT NOT NULL DEFAULT '',
+    forum         VARCHAR(40) DEFAULT '',
+    thread_id     INT UNSIGNED NOT NULL,
+    parent        INT NULL DEFAULT NULL,
+    date          TIMESTAMP NOT NULL,
+    likes         INT NOT NULL DEFAULT 0,
+    dislikes      INT NOT NULL DEFAULT 0,
+    isApproved    BOOLEAN NOT NULL DEFAULT 0,
+    isHighlighted BOOLEAN NOT NULL DEFAULT 0,
+    isEdited      BOOLEAN NOT NULL DEFAULT 0,
+    isSpam        BOOLEAN NOT NULL DEFAULT 0,
+    isDeleted     BOOLEAN NOT NULL DEFAULT 0,
+    FOREIGN KEY (user) REFERENCES Users(email)
+    ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (thread_id) REFERENCES Threads(id)
+    ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY fo (forum) REFERENCES Forums(short_name)
+    ON DELETE CASCADE ON UPDATE CASCADE
+);
+/*=================================================*/
+CREATE TABLE Threads (
+    id        INT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    forum     VARCHAR(40) UNIQUE KEY,
+    user      VARCHAR(50) NOT NULL DEFAULT '',
+    title     VARCHAR(50) NOT NULL DEFAULT '',
+    slug      VARCHAR(50) NOT NULL DEFAULT '',
+    message   TEXT NOT NULL DEFAULT '',
+    date      TIMESTAMP NOT NULL,
+    likes     INT NOT NULL DEFAULT 0,
+    dislikes  INT NOT NULL DEFAULT 0,
+    isClosed  BOOLEAN NOT NULL DEFAULT 0,
+    isDeleted BOOLEAN NOT NULL DEFAULT 0,   
+    FOREIGN KEY (user) REFERENCES Users(email)
+    ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (forum) REFERENCES Forums(short_name)
+    ON DELETE CASCADE ON UPDATE CASCADE
+);
