@@ -1,7 +1,6 @@
 var	moment = require('moment');
 
 module.exports.forum = function (dataObject, userData) {
-  console.log(dataObject);
   return {
     "id": dataObject.id,
     "name": dataObject.name,

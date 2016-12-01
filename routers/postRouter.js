@@ -2,7 +2,7 @@ var express = require('express');
 var postRouter = express.Router();
 var functions = require('../functions/functions');
 var callback = require('../response');
-var postLoader = require('../functions/post/postLoader');
+
 
 
 postRouter.use(function (req, res, next) {

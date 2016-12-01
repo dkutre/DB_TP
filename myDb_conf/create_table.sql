@@ -1,5 +1,6 @@
 use myDataBase;
 
+<<<<<<< HEAD
 DROP TABLE IF EXISTS `followers`;
 CREATE TABLE `followers` (
   `followerEmail` varchar(255) NOT NULL,

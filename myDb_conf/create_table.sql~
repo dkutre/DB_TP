@@ -1,5 +1,6 @@
 use myDataBase;
 
+<<<<<<< HEAD
 DROP TABLE IF EXISTS `followers`;
 CREATE TABLE `followers` (
   `followerEmail` varchar(255) NOT NULL,
@@ -40,8 +41,7 @@ CREATE TABLE `post` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-DROP TABLE IF EXISTS `
-DROP TABLE IF EXISTS `thread`;`;
+DROP TABLE IF EXISTS `subscribes`;
 CREATE TABLE `subscribes` (
   `userEmail` varchar(255) NOT NULL,
   `threadId` int(10) unsigned NOT NULL,
@@ -83,6 +83,12 @@ DROP TABLE IF EXISTS followers;
 CREATE TABLE followers (
   followerEmail varchar(200) NOT NULL,
   followeeEmail varchar(200) NOT NULL,
+=======
+DROP TABLE IF EXISTS followers;
+CREATE TABLE followers (
+  followerEmail varchar(100) NOT NULL,
+  followeeEmail varchar(100) NOT NULL,
+>>>>>>> b38b26559f0df9d1d6d89c7952cb4bc6504a2122
   id int(10) unsigned NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -91,9 +97,15 @@ CREATE TABLE followers (
 DROP TABLE IF EXISTS forum;
 CREATE TABLE forum (
   id int(10) unsigned NOT NULL AUTO_INCREMENT,
+<<<<<<< HEAD
   name varchar(200) NOT NULL,
   shortname varchar(200) NOT NULL,
   userEmail varchar(200) NOT NULL,
+=======
+  name varchar(100) NOT NULL,
+  shortname varchar(100) NOT NULL,
+  userEmail varchar(100) NOT NULL,
+>>>>>>> b38b26559f0df9d1d6d89c7952cb4bc6504a2122
   PRIMARY KEY (id),
   UNIQUE KEY shortname_UNIQUE (shortname),
   UNIQUE KEY name_UNIQUE (name)
@@ -115,20 +127,33 @@ CREATE TABLE post (
   points int(11) NOT NULL DEFAULT 0,
   threadId int(10) unsigned NOT NULL,
   date datetime NOT NULL,
+<<<<<<< HEAD
   forumShortname varchar(200) NOT NULL,
   userEmail varchar(200) NOT NULL,
+=======
+  forumShortname varchar(100) NOT NULL,
+  userEmail varchar(100) NOT NULL,
+>>>>>>> b38b26559f0df9d1d6d89c7952cb4bc6504a2122
   dislikes int(11) NOT NULL DEFAULT 0,
   materPath varchar(200) NOT NULL,
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+<<<<<<< HEAD
 CREATE INDEX mathPath ON post(threadId, parent, materPath);
+=======
+CREATE INDEX mathPatg ON post(threadId, parent, materPath);
+>>>>>>> b38b26559f0df9d1d6d89c7952cb4bc6504a2122
 
 
 
 DROP TABLE IF EXISTS subscribes;
 CREATE TABLE subscribes (
+<<<<<<< HEAD
   userEmail varchar(200) NOT NULL,
+=======
+  userEmail varchar(100) NOT NULL,
+>>>>>>> b38b26559f0df9d1d6d89c7952cb4bc6504a2122
   threadId int(10) unsigned NOT NULL,
   id int(10) unsigned NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (id)
@@ -138,7 +163,11 @@ DROP TABLE IF EXISTS thread;
 CREATE TABLE thread (
   date datetime NOT NULL,
   dislikes int(11) NOT NULL DEFAULT 0,
+<<<<<<< HEAD
   forumShortname varchar(200) NOT NULL,
+=======
+  forumShortname varchar(100) NOT NULL,
+>>>>>>> b38b26559f0df9d1d6d89c7952cb4bc6504a2122
   id int(10) unsigned NOT NULL AUTO_INCREMENT,
   isClosed tinyint(1) NOT NULL,
   isDeleted tinyint(1) NOT NULL,
@@ -148,12 +177,17 @@ CREATE TABLE thread (
   posts int(10) unsigned NOT NULL DEFAULT 0,
   slug varchar(200) NOT NULL,
   title varchar(200) NOT NULL,
+<<<<<<< HEAD
   userEmail varchar(200) NOT NULL,
+=======
+  userEmail varchar(100) NOT NULL,
+>>>>>>> b38b26559f0df9d1d6d89c7952cb4bc6504a2122
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS user;
 CREATE TABLE user (
+<<<<<<< HEAD
   email varchar(200) NOT NULL,
   id int(10) unsigned NOT NULL AUTO_INCREMENT,
   about varchar(5000) NOT NULL,
@@ -163,6 +197,17 @@ CREATE TABLE user (
   PRIMARY KEY (id),
   UNIQUE KEY email_UNIQUE (email)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;*/
+=======
+  email varchar(100) NOT NULL,
+  id int(10) unsigned NOT NULL AUTO_INCREMENT,
+  about varchar(5000) NOT NULL,
+  isAnonymous tinyint(1) NOT NULL DEFAULT 0,
+  name varchar(100) NOT NULL,
+  username varchar(100) NOT NULL,
+  PRIMARY KEY (id),
+  UNIQUE KEY email_UNIQUE (email)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+>>>>>>> b38b26559f0df9d1d6d89c7952cb4bc6504a2122
 
 
 
