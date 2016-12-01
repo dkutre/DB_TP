@@ -28,16 +28,16 @@ function create(dataObject, responceCallback) {
           function (err, res) {
             if (err) {
               err = func.mysqlError(err.errno);
-              console.log('insert');
-              dataObject.id = res.insertId;
               callback(err, null);
             }
             // if (err) callback(err, null);
             else {
+              console.log('insert');
+              dataObject.id = res.insertId;
               callback(null, res);
             }
           });
-      },
+      }/*,
       function (callback) {
         db.query("SELECT * FROM user WHERE email = ?",
           [dataObject.email],
@@ -57,14 +57,14 @@ function create(dataObject, responceCallback) {
             }
           }
         );
-      }],
+      }*/],
     function (err, res) {
       if (err) {
         responceCallback(err.code, err.message);
       }
       else {
         res = res[1];
-        responceCallback(0, res);//views.user(res, [], [], []));
+        responceCallback(0, dataObject);//views.user(res, [], [], []));
       }
     }
   );

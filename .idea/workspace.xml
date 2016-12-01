@@ -5,46 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9573bb39-75b4-4a74-a297-d85155343552" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/functions/clear.js" afterPath="$PROJECT_DIR$/functions/clear.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/functions/forum/create.js" afterPath="$PROJECT_DIR$/functions/forum/create.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/functions/forum/details.js" afterPath="$PROJECT_DIR$/functions/forum/details.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/functions/forum/listPosts.js" afterPath="$PROJECT_DIR$/functions/forum/listPosts.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/functions/forum/listThreads.js" afterPath="$PROJECT_DIR$/functions/forum/listThreads.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/functions/forum/listUsers.js" afterPath="$PROJECT_DIR$/functions/forum/listUsers.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/functions/functions.js" afterPath="$PROJECT_DIR$/functions/functions.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/functions/post/create.js" afterPath="$PROJECT_DIR$/functions/post/create.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/functions/post/details.js" afterPath="$PROJECT_DIR$/functions/post/details.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/functions/post/list.js" afterPath="$PROJECT_DIR$/functions/post/list.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/functions/post/remove.js" afterPath="$PROJECT_DIR$/functions/post/remove.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/functions/post/restore.js" afterPath="$PROJECT_DIR$/functions/post/restore.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/functions/post/update.js" afterPath="$PROJECT_DIR$/functions/post/update.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/functions/post/vote.js" afterPath="$PROJECT_DIR$/functions/post/vote.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/functions/thread/close.js" afterPath="$PROJECT_DIR$/functions/thread/close.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/functions/thread/create.js" afterPath="$PROJECT_DIR$/functions/thread/create.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/functions/thread/details.js" afterPath="$PROJECT_DIR$/functions/thread/details.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/functions/thread/list.js" afterPath="$PROJECT_DIR$/functions/thread/list.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/functions/thread/listPosts.js" afterPath="$PROJECT_DIR$/functions/thread/listPosts.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/functions/thread/open.js" afterPath="$PROJECT_DIR$/functions/thread/open.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/functions/thread/remove.js" afterPath="$PROJECT_DIR$/functions/thread/remove.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/functions/thread/restore.js" afterPath="$PROJECT_DIR$/functions/thread/restore.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/functions/thread/subscribe.js" afterPath="$PROJECT_DIR$/functions/thread/subscribe.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/functions/thread/unsubscribe.js" afterPath="$PROJECT_DIR$/functions/thread/unsubscribe.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/functions/thread/update.js" afterPath="$PROJECT_DIR$/functions/thread/update.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/functions/thread/vote.js" afterPath="$PROJECT_DIR$/functions/thread/vote.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/functions/user/create.js" afterPath="$PROJECT_DIR$/functions/user/create.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/functions/user/details.js" afterPath="$PROJECT_DIR$/functions/user/details.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/functions/user/follow.js" afterPath="$PROJECT_DIR$/functions/user/follow.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/functions/user/listFollowers.js" afterPath="$PROJECT_DIR$/functions/user/listFollowers.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/functions/user/listFollowing.js" afterPath="$PROJECT_DIR$/functions/user/listFollowing.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/functions/user/listPosts.js" afterPath="$PROJECT_DIR$/functions/user/listPosts.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/functions/user/unfollow.js" afterPath="$PROJECT_DIR$/functions/user/unfollow.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/functions/user/updateProfile.js" afterPath="$PROJECT_DIR$/functions/user/updateProfile.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/functions/views.js" afterPath="$PROJECT_DIR$/functions/views.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/myDb_conf/create_table.sql" afterPath="$PROJECT_DIR$/myDb_conf/create_table.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routers/postRouter.js" afterPath="$PROJECT_DIR$/routers/postRouter.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routers/userRouter.js" afterPath="$PROJECT_DIR$/routers/userRouter.js" />
     </list>
     <ignored path="DB_TP.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -67,101 +30,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="list.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/functions/post/list.js">
+      <file leaf-file-name="create.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/functions/user/create.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="398">
-              <caret line="50" column="0" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="remove.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/functions/post/remove.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="380">
-              <caret line="63" column="0" selection-start-line="63" selection-start-column="0" selection-end-line="63" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="restore.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/functions/post/restore.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="398">
-              <caret line="64" column="0" selection-start-line="64" selection-start-column="0" selection-end-line="64" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="update.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/functions/post/update.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="396">
-              <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="vote.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/functions/post/vote.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="create.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/functions/forum/create.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="576">
-              <caret line="32" column="0" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="details.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/functions/forum/details.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="200">
-              <caret line="34" column="0" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="listPosts.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/functions/forum/listPosts.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="398">
-              <caret line="58" column="0" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="listThreads.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/functions/forum/listThreads.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="380">
-              <caret line="49" column="0" selection-start-line="49" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="listUsers.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/functions/forum/listUsers.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="398">
-              <caret line="68" column="0" selection-start-line="68" selection-start-column="0" selection-end-line="68" selection-end-column="0" />
+            <state relative-caret-position="702">
+              <caret line="39" column="9" selection-start-line="39" selection-start-column="9" selection-end-line="39" selection-end-column="9" />
               <folding />
             </state>
           </provider>
@@ -191,7 +64,6 @@
         <option value="$PROJECT_DIR$/functions/user/listFollowers.js" />
         <option value="$PROJECT_DIR$/functions/user/listFollowing.js" />
         <option value="$PROJECT_DIR$/functions/user/unfollow.js" />
-        <option value="$PROJECT_DIR$/functions/user/updateProfile.js" />
         <option value="$PROJECT_DIR$/functions/thread/close.js" />
         <option value="$PROJECT_DIR$/functions/thread/create.js" />
         <option value="$PROJECT_DIR$/functions/thread/details.js" />
@@ -208,7 +80,6 @@
         <option value="$PROJECT_DIR$/routers/postRouter.js" />
         <option value="$PROJECT_DIR$/functions/post/postLoader.js" />
         <option value="$PROJECT_DIR$/functions/connection.js" />
-        <option value="$PROJECT_DIR$/functions/user/create.js" />
         <option value="$PROJECT_DIR$/routers/userRouter.js" />
         <option value="$PROJECT_DIR$/response.js" />
         <option value="$PROJECT_DIR$/functions/views.js" />
@@ -226,6 +97,8 @@
         <option value="$PROJECT_DIR$/functions/forum/listPosts.js" />
         <option value="$PROJECT_DIR$/functions/forum/listThreads.js" />
         <option value="$PROJECT_DIR$/functions/forum/listUsers.js" />
+        <option value="$PROJECT_DIR$/functions/user/updateProfile.js" />
+        <option value="$PROJECT_DIR$/functions/user/create.js" />
       </list>
     </option>
   </component>
@@ -298,24 +171,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="functions" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="DB_TP" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="DB_TP" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="functions" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="forum" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -496,12 +351,12 @@
       <workItem from="1480572647429" duration="1297000" />
       <workItem from="1480576660504" duration="5314000" />
       <workItem from="1480605954697" duration="28000" />
-      <workItem from="1480623876310" duration="883000" />
+      <workItem from="1480623876310" duration="1346000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="218117000" />
+    <option name="totallyTimeSpent" value="218580000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -514,14 +369,14 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="24" width="1301" height="744" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24178404" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18309858" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32847896" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.69093853" sideWeight="0.51251954" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32847896" sideWeight="0.4968701" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24960877" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24919094" sideWeight="0.48748043" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.5695793" sideWeight="0.48748043" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -564,13 +419,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="18">
           <caret line="53" column="3" selection-start-line="53" selection-start-column="3" selection-end-line="53" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/functions/user/updateProfile.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="21" column="31" selection-start-line="21" selection-start-column="31" selection-end-line="21" selection-end-column="31" />
         </state>
       </provider>
     </entry>
@@ -771,13 +619,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/functions/user/create.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1170">
-          <caret line="65" column="21" selection-start-line="65" selection-start-column="21" selection-end-line="65" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/functions/connection.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
@@ -917,6 +758,22 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="398">
           <caret line="68" column="0" selection-start-line="68" selection-start-column="0" selection-end-line="68" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/functions/user/updateProfile.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="738">
+          <caret line="41" column="0" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/functions/user/create.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="702">
+          <caret line="39" column="9" selection-start-line="39" selection-start-column="9" selection-end-line="39" selection-end-column="9" />
           <folding />
         </state>
       </provider>

@@ -1,5 +1,4 @@
 var db = require('../connection');
-<<<<<<< HEAD
 var func = require('../system_fucntions');
 var async = require('async');
 var views = require('../views');
@@ -15,7 +14,6 @@ function updateProfile(dataObject, responceCallback) {
     [dataObject.user],
     function (err, res) {
       if (err) {
-<<<<<<< HEAD
         err = func.mysqlError(err.errno);
         responceCallback(err.code, err.message);
       }
