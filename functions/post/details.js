@@ -8,7 +8,7 @@ var threadDetails = require('../thread/details');
 var error = func.errors;
 
 function details(dataObject, responceCallback) {
-  if (!func.checkFields(dataObject, ['post',])) {
+  if (!func.checkFields(dataObject, ['post'])) {
     responceCallback(error.requireFields.code, error.requireFields.message);
     return;
   }

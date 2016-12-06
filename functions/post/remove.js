@@ -14,7 +14,7 @@ function remove(dataObject, responceCallback) {
       }
       else {
         if (res.length == 0) {
-          err = error.norecord;
+          err = err.norecord;
           responceCallback(err.code, err.message);
         }
         else {

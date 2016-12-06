@@ -7,22 +7,32 @@ var userDetails = require('../user/details')
 
 
 function getSQLForListUsers(wherefrom) {
+/*
   var sql = 'SELECT email AS uEmail FROM user WHERE email IN ( ';
 
   sql += ' SELECT DISTINCT userEmail FROM post ';
 
   sql += ' WHERE forumShortname = "' + wherefrom.forum + '" )';
+*/
+
+
   if (wherefrom.since_id) {
-    sql += ' AND id >= ' + wherefrom.since_id;
+    var sql2 = 'select distinct email AS uEmail FROM user JOIN post ON (email = userEmail and user.id >= ' + wherefrom.since_id + ' and forumShortname = "' + wherefrom.forum + '")';
+  } else {
+    var sql2 = 'select distinct email AS uEmail FROM user JOIN post ON (email = userEmail and forumShortname = "' + wherefrom.forum + '")';
   }
+
+
   if (wherefrom.order !== 'asc') {
     wherefrom.order = 'desc';
   }
-  sql += ' ORDER BY name ' + wherefrom.order;
+
+  sql2 += ' ORDER BY name ' + wherefrom.order;
+
   if (wherefrom.limit) {
-    sql += ' LIMIT ' + wherefrom.limit;
+    sql2 += ' LIMIT ' + wherefrom.limit;
   }
-  return sql;
+  return sql2;
 }
 
 function listUsers(dataObject, responceCallback) {
@@ -44,6 +54,7 @@ function listUsers(dataObject, responceCallback) {
         if (res.length === 0) {
           responceCallback(0, []);
         } else {
+          //console.log('1', res);
           res = res.map((elem) => {
             return function (callback) {
               var userObject = {user: elem.uEmail};
@@ -52,6 +63,7 @@ function listUsers(dataObject, responceCallback) {
               });
             }
           });
+          //console.log('2', res);
           async.parallel(res, function (err, results) {
             if (err) {
               responceCallback(err.code, err.message);

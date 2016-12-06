@@ -1,3 +1,4 @@
+'use strict';
 var db = require('../connection');
 var func = require('../system_fucntions');
 var async = require('async');

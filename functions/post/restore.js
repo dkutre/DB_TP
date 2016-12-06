@@ -2,6 +2,7 @@ var db = require('../connection');
 var func = require('../system_fucntions');
 var async = require('async');
 var views = require('./../views');
+var error = func.errors;
 
 function restore(dataObject, responceCallback) {
   db.query('SELECT threadId FROM post WHERE id = ?;',

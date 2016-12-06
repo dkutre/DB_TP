@@ -33,7 +33,7 @@ function listPosts(dataObject, responceCallback) {
           responceCallback(err.code, err.message);
         }
         else {
-          console.log(res);
+         // console.log(res);
           res = res.map((node) => {
             return function (callback) {
               postDetails({post: node.id, related: dataObject.related}, function (code, res) {
@@ -41,7 +41,7 @@ function listPosts(dataObject, responceCallback) {
               });
             }
           });
-          console.log(res);
+          //console.log(res);
           async.parallel(res, function (err, res) {
             if (err) {
               responceCallback(err.code, err.message);
