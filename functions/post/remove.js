@@ -2,6 +2,7 @@ var db = require('../connection');
 var func = require('../system_fucntions');
 var async = require('async');
 var views = require('./../views');
+var error = func.errors;
 
 
 function remove(dataObject, responceCallback) {
@@ -14,7 +15,7 @@ function remove(dataObject, responceCallback) {
       }
       else {
         if (res.length == 0) {
-          err = err.norecord;
+          err = error.norecord;
           responceCallback(err.code, err.message);
         }
         else {

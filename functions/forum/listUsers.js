@@ -7,19 +7,10 @@ var userDetails = require('../user/details')
 
 
 function getSQLForListUsers(wherefrom) {
-/*
-  var sql = 'SELECT email AS uEmail FROM user WHERE email IN ( ';
-
-  sql += ' SELECT DISTINCT userEmail FROM post ';
-
-  sql += ' WHERE forumShortname = "' + wherefrom.forum + '" )';
-*/
-
-
   if (wherefrom.since_id) {
-    var sql2 = 'select distinct email AS uEmail FROM user JOIN post ON (email = userEmail and user.id >= ' + wherefrom.since_id + ' and forumShortname = "' + wherefrom.forum + '")';
+    var sql2 = 'select distinct email AS uEmail FROM user JOIN userOnForum ON (email = userEmail and user.id >= ' + wherefrom.since_id + ' and forumShortname = "' + wherefrom.forum + '")';
   } else {
-    var sql2 = 'select distinct email AS uEmail FROM user JOIN post ON (email = userEmail and forumShortname = "' + wherefrom.forum + '")';
+    var sql2 = 'select distinct email AS uEmail FROM user JOIN userOnForum ON (email = userEmail and forumShortname = "' + wherefrom.forum + '")';
   }
 
 
@@ -32,6 +23,7 @@ function getSQLForListUsers(wherefrom) {
   if (wherefrom.limit) {
     sql2 += ' LIMIT ' + wherefrom.limit;
   }
+  //console.log(sql2);
   return sql2;
 }
 
@@ -51,10 +43,11 @@ function listUsers(dataObject, responceCallback) {
         responceCallback(err.code, err.message);
       }
       else {
+       // console.log('1', res);
         if (res.length === 0) {
           responceCallback(0, []);
         } else {
-          //console.log('1', res);
+
           res = res.map((elem) => {
             return function (callback) {
               var userObject = {user: elem.uEmail};
@@ -68,6 +61,7 @@ function listUsers(dataObject, responceCallback) {
             if (err) {
               responceCallback(err.code, err.message);
             } else {
+           //   console.log(results);
               responceCallback(0, results);
             }
           });

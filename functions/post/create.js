@@ -75,7 +75,7 @@ function create(dataObject, responceCallback) {
                       [dataObject.isApproved, dataObject.isDeleted, dataObject.isEdited,
                         dataObject.isHighlighted, dataObject.isSpam, dataObject.message, dataObject.parent,
                         dataObject.thread, dataObject.date, dataObject.forum, dataObject.user, newMaterPath],
-                       function (err, res) {
+                      function (err, res) {
                         if (err) {
                           callback(func.mysqlError(err.errno), null);
                         }
@@ -102,10 +102,26 @@ function create(dataObject, responceCallback) {
               callback(null, res);
             }
           });
+      },
+      function (callback) {
+        db.query('INSERT INTO userOnForum (userEmail, forumShortname) values (?, ?);',
+          [dataObject.user, dataObject.forum],
+          function (err, res) {
+            if (err) //{
+              console.log(err);
+            //  callback(err, null);
+              //callback(func.mysqlError(err.d), null);
+            //}
+            //else {
+              callback(null, true);
+            //}
+          }
+        );
       }
     ],
     function (err, results) {
       if (err) {
+       // console.log(err);
         responceCallback(err.code, err.message);
       }
       else {

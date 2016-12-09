@@ -72,6 +72,16 @@ function clear(responceCallback) {
               callback(null, res);
             }
           });
+      },
+      function (callback) {
+        db.query("TRUNCATE TABLE userOnForum",
+        function (err, res) {
+          if (err) {
+            callback(err, null);
+          } else {
+            callback(null, res);
+          }
+        })
       }
     ],
     function (err, results) {

@@ -31,6 +31,7 @@ forumRouter.get('/listThreads', function (req, res) {
 
 forumRouter.get('/listUsers', function (req, res) {
   //console.log('forum_listUsers');
+  //callback(res)(200, {});
   functions.forumListUsers(req.query, callback(res));
 });
 

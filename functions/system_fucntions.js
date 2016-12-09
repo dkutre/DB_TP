@@ -139,8 +139,9 @@ function moreDetails(dataObject, responceCallback) {
     " WHERE email = ? " +
     " GROUP BY email; ",
     [dataObject.user], function(err, res) {
-      if (err)
+      if (err) {
         err = mysqlError(err.errno);
+      }
       else {
         if (res.length === 0) res = null;
       }
