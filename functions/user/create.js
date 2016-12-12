@@ -6,7 +6,6 @@ var error = func.errors;
 
 
 function create(dataObject, responceCallback) {
-  //TODO можно оптимизировать убрав лищний select
   if (!dataObject.username) {
     dataObject.username = '';
   }

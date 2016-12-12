@@ -107,8 +107,8 @@ function create(dataObject, responceCallback) {
         db.query('INSERT INTO userOnForum (userEmail, forumShortname) values (?, ?);',
           [dataObject.user, dataObject.forum],
           function (err, res) {
-            if (err) //{
-              console.log(err);
+            //if (err) //{
+             // console.log(err);
             //  callback(err, null);
               //callback(func.mysqlError(err.d), null);
             //}
